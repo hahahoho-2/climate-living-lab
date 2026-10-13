@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR 코드 만들기</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .qr-wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 40px; }
+    .qr-wrap h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+    .qr-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .qr-out { margin-top: 20px; text-align: center; }
+    .qr-out canvas { width: 100%; max-width: 520px; height: auto; border-radius: 16px; border: 1px solid var(--border); background: #fff; }
+    .qr-msg { margin-top: 12px; font-size: 15px; color: var(--ink-2); }
+    .qr-msg.warn { background: var(--warn-bg); color: var(--ink); padding: 10px 14px; border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <div class="qr-wrap">
+    <p class="eyebrow">선생님용 도구</p>
+    <h1>학생 접속용 QR 코드 만들기</h1>
+    <p class="muted" style="margin-top:6px">배포한 웹앱 주소로 QR 코드를 만들어 PNG로 저장하면 PPT·활동지에 넣을 수 있어요. (이 페이지만 인터넷 연결이 필요해요)</p>
+    <label class="field-label" for="url">웹앱 주소</label>
+    <input class="text-input" type="text" id="url" inputmode="url" autocomplete="off" spellcheck="false">
+    <label class="field-label" for="caption">QR 아래 문구 (선택)</label>
+    <input class="text-input" type="text" id="caption" value="미래 기후와 의식주 탐구실">
+    <div class="qr-actions">
+      <button class="btn primary" id="make">QR 만들기</button>
+      <button class="btn" id="download" disabled>PNG 저장</button>
+      <a class="btn" href="./">← 웹앱으로</a>
+    </div>
+    <p class="qr-msg" id="msg"></p>
+    <div class="qr-out"><canvas id="canvas" width="900" height="1040" hidden></canvas></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script>
+    (function () {
+      var urlInput = document.getElementById("url");
+      var capInput = document.getElementById("caption");
+      var canvas = document.getElementById("canvas");
+      var msg = document.getElementById("msg");
+      var dl = document.getElementById("download");
+      function setMsg(text, warn) { msg.textContent = text; msg.className = "qr-msg" + (warn ? " warn" : ""); }
+      urlInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
+      if (location.protocol === "file:") {
+        urlInput.value = "";
+        urlInput.placeholder = "예: https://아이디.github.io/climate-living-lab/";
+        setMsg("지금은 컴퓨터의 파일로 열려 있어요. 배포한 주소(https://…)를 직접 넣어 주세요.", true);
+      }
+      function make() {
+        var text = urlInput.value.trim();
+        if (!text) { setMsg("주소를 먼저 넣어 주세요.", true); return; }
+        if (typeof window.qrcode !== "function") { setMsg("QR 라이브러리를 불러오지 못했어요. 인터넷 연결을 확인한 뒤 새로고침해 주세요.", true); return; }
+        var qr = window.qrcode(0, "M");
+        qr.addData(text);
+        qr.make();
+        var n = qr.getModuleCount(), quiet = 4, cell = Math.floor(900 / (n + quiet * 2)), qrPx = cell * (n + quiet * 2);
+        var caption = capInput.value.trim();
+        canvas.width = qrPx;
+        canvas.height = qrPx + 140;
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#000000";
+        for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (qr.isDark(r, c)) ctx.fillRect((c + quiet) * cell, (r + quiet) * cell, cell, cell);
+        var font = 'system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
+        ctx.textAlign = "center";
+        if (caption) { ctx.fillStyle = "#161614"; ctx.font = "800 50px " + font; ctx.fillText(caption, qrPx / 2, qrPx + 46); }
+        ctx.fillStyle = "#52514e"; ctx.font = "500 26px " + font;
+        ctx.fillText(text.replace(/^https?:\/\//, ""), qrPx / 2, qrPx + (caption ? 100 : 60));
+        canvas.hidden = false;
+        dl.disabled = false;
+        setMsg("휴대폰 카메라로 화면의 QR을 찍어 주소가 맞게 열리는지 꼭 확인하세요.");
+      }
+      document.getElementById("make").addEventListener("click", make);
+      dl.addEventListener("click", function () {
+        canvas.toBlob(function (blob) {
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "climate-living-lab-qr.png";
+          document.body.appendChild(a); a.click();
+          setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+        }, "image/png");
+      });
+      if (urlInput.value) window.addEventListener("load", make);
+    })();
+  </script>
+</body>
+</html>
