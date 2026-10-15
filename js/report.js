@@ -17,7 +17,7 @@
     ["생활문화 설계", "적응 기능과 사용 장면이 구체적인가?"],
     ["성찰", "한계·추가 자료·환경 영향을 고려했나?"],
   ];
-  const Q3_CHIPS = ["장마 시작·끝 날짜", "하루에 쏟아지는 폭우의 양", "폭설과 적설량", "여름·겨울 등 계절별 기온", "작물의 토양·물·병해충 조건", "소재·건물의 실제 성능", "비용과 에너지 사용"];
+  const Q3_CHIPS = ["장마 시작·끝 날짜", "하루에 쏟아지는 폭우의 양", "폭설과 적설량", "여름·겨울 등 계절별 기온", "중간 시나리오(SSP2-4.5 등)의 전망", "작물의 토양·물·병해충 조건", "소재·건물의 실제 성능", "비용과 에너지 사용"];
 
   function getRep() {
     const r = CL.load("report", {}) || {};
@@ -164,6 +164,9 @@
     const ev = CL.getEvidence();
     const hyps = CL.getHyps(area);
     h += '<section class="panel" id="sec2">' + head("2", "s2", "생활문화로 연결하기", "자료(사실)와 나의 추론을 구분해서 써요.");
+    h += '<div class="guide"><b>🧭 길잡이 · 사실과 추론을 나눠 써요</b>' +
+      "<span><b>자료에서 확인한 사실</b>: “SSP1-2.6에서 용인시 폭염일수는 현재 11.3일에서 후반기 35.6일로 늘어날 것으로 전망돼요.”</span>" +
+      "<span><b>나의 추론</b>: “그래서 한낮 야외 활동이 어려워지는 날이 늘 수 있어요.” — 추론에는 ‘~할 수 있어요’, ‘~일 것 같아요’처럼 가능성을 나타내는 말을 써요.</span></div>";
     h += '<div class="ctrl-row"><div class="ctrl"><span class="ctrl-label">우리 모둠 영역</span><div class="seg">' + CL.AREA_IDS.map((id) =>
       '<button data-act="rep-area" data-v="' + id + '" aria-pressed="' + (id === area) + '"><span>' + esc(CL.AREAS[id].icon + " " + CL.AREAS[id].name) + "</span></button>").join("") + "</div></div></div>";
     h += '<span class="field-label">❓ 나의 탐구 질문</span>' + (q
@@ -211,7 +214,7 @@
     return '<div class="table-scroll"><table class="dtable"><caption>' + esc(region + " · " + CL.scenFull(scen)) + '</caption><thead><tr><th>기후 지표</th><th>단위</th>' +
       CL.PERIODS.map((p) => "<th>" + esc(p.short) + "<br><small>" + esc(p.years) + "</small></th>").join("") + "</tr></thead><tbody>" +
       inds.map((id) => "<tr><th>" + esc(CL.indName(id)) + "</th><td>" + esc(CL.unit(id)) + "</td>" + CL.series(region, id, scen).map((v) => "<td>" + (v == null ? "–" : CL.fmtVal(id, v)) + "</td>").join("") + "</tr>").join("") +
-      "</tbody></table></div><p class=\"note\">열대야일수·5일 최다강수량 같은 지표는 ⑤ 자료 찾기에서 추가하면 표에 나타나요.</p>";
+      "</tbody></table></div><p class=\"note\">현재(2000–2019)는 기후모델이 재현한 값이에요. 다른 지역 값은 ⑤ 자료 찾기에서 추가하면 표에 나타나요.</p>";
   }
   function helper(key, label, lines, target) {
     const open = CL.state.open[key];

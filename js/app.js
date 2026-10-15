@@ -25,8 +25,8 @@
     { id: "build", label: "✏️ 설계 카드" },
   ];
   const SCEN_DESC = {
-    low: "온실가스 배출을 크게 줄여 탄소중립에 가까워지는 미래를 가정해요.",
-    high: "화석연료를 많이 쓰고 온실가스 배출이 계속 늘어나는 미래를 가정해요.",
+    low: "재생에너지 기술이 발달해 화석연료 사용이 최소화되고, 친환경적으로 경제가 성장한다고 가정한 시나리오예요.",
+    high: "산업기술이 빠르게 발전하면서 화석연료를 많이 쓰고, 도시 위주의 개발이 확대된다고 가정한 시나리오예요.",
   };
   const REASONS = ["지금까지 변한 속도대로", "앞으로 더 빨라질 것 같아서", "온실가스를 줄이면 덜 변할 것 같아서", "배출 시나리오를 생각해서", "감으로 골랐어요"];
   const Q_STARTERS = ["왜 ___일까?", "만약 ___라면 어떻게 될까?", "어떻게 하면 ___할 수 있을까?", "앞으로 ___은(는) 어떻게 달라질까?", "___와(과) ___는 무엇이 다를까?"];
@@ -160,7 +160,9 @@
     const seg = (p, cls) => '<div class="tl-seg ' + (cls || "") + '"><b>' + esc(CL.PERIODS[p].short) + "</b><small>" + esc(CL.PERIODS[p].years) + "</small></div>";
     return '<section class="panel"><div class="panel-head"><div><h3>기간 한눈에 보기</h3><p class="panel-desc">모든 값은 20년 동안의 평균이에요. 특정 해의 날씨를 말하지 않아요.</p></div></div>' +
       '<div class="timeline"><div class="tl-track">' + seg(0, "now") + seg(1) + seg(2) + '<div class="tl-seg gap"><b>…</b><small>2061–2080</small></div>' + seg(3) + "</div>" +
-      '<div class="tl-here" style="left:' + pos + '%"><span>지금 ' + year + "</span></div></div></section>";
+      '<div class="tl-here" style="left:' + pos + '%"><span>지금 ' + year + "</span></div></div>" +
+      '<ul class="plain small tl-notes"><li><b>현재(2000–2019)</b> 값은 실제 관측값이 아니라, 기후모델이 그 시기의 기후를 재현해 계산한 값이에요. 그래서 관측 기록과 조금 다를 수 있어요.</li>' +
+      "<li><b>전반기(2021–2040)</b>에는 지금(" + year + "년)이 들어 있지만, 이 기간의 값도 관측이 아니라 시나리오에 따른 전망값이에요.</li></ul></section>";
   }
 
   function predictStep1() {
@@ -172,7 +174,9 @@
     h += '<div class="two">' + CL.SCENS.map((s) =>
       '<button class="scen-card" data-act="scen" data-v="' + s + '" aria-pressed="' + (s === sc) + '"><span class="scen-line s-' + s + '"></span>' +
       "<b>" + esc(CL.scenFull(s)) + "</b><span>" + esc(SCEN_DESC[s]) + "</span></button>").join("") + "</div>";
-    h += '<p class="note">시나리오는 ‘이런 미래라면’을 가정한 전망이에요. 어느 하나가 반드시 일어난다는 예보가 아니에요.</p>';
+    h += '<p class="note">시나리오는 ‘이런 미래라면’을 가정한 전망이에요. 어느 하나가 반드시 일어난다는 예보가 아니에요. ' +
+      "이 앱은 차이가 큰 두 시나리오만 담았고, 기상청 포털에는 중간 시나리오(SSP2-4.5, SSP3-7.0)도 있어요.</p>";
+    h += '<div class="guide"><b>🧭 길잡이 · 자료를 읽을 때 꼭 확인해요</b><span>① 어느 <b>지역</b>인가요? ② 어떤 <b>시나리오</b>인가요? ③ 어느 <b>기간</b>의 평균인가요? ④ <b>단위</b>는 무엇인가요?</span></div>';
     h += timeline();
     h += sectionTitle("지표별로 살펴보기", CL.scenFull(sc) + " 기준 · 카드를 누르면 그 지표를 예측하러 가요.");
     h += '<div class="tiles">' + CL.indsFor(r).map((id) => {
@@ -214,6 +218,8 @@
     const step = m.step || 1;
     h += '<section class="panel"><div class="panel-head"><div><h3>중반기·후반기 값을 예측해요</h3><p class="panel-desc">− / + 버튼을 누르면 ' +
       esc(CL.fmtNum(step, CL.decimals(step)) + CL.unitShort(id)) + "씩 바뀌어요. 숫자를 눌러 직접 입력해도 돼요.</p></div></div>";
+    h += '<div class="guide"><b>🧭 길잡이 · 예측하기 전에 생각해 봐요</b><span>① 지금까지 얼마나 변했나요? ② 온실가스를 많이 내보내는 미래인가요, 줄이는 미래인가요? ' +
+      "③ 앞으로도 같은 속도로 변할까요? — 정답을 맞히는 활동이 아니라, 내 생각과 전망을 비교하며 배우는 활동이에요.</span></div>";
     h += '<div class="pred-rows">' + [2, 3].map((p) => {
       const pv = pr["p" + p];
       const dec = Math.max(CL.decOf(id), CL.decimals(step));
@@ -278,6 +284,7 @@
         '<span>기상청 <b>' + (v == null ? "–" : CL.fmtVal(id, v) + esc(CL.unitShort(id))) + "</b> · 내 예측 <b>" + (pv == null ? "–" : CL.fmtNum(pv, dec) + esc(CL.unitShort(id))) + "</b></span>" +
         '<span class="cmp-tail">' + tail + "</span></div>";
     }).join("") + "</div>";
+    h += '<p class="note">ℹ️ 기상청 값도 ‘정답’이 아니라 ‘이 시나리오라면’ 기후모델로 계산한 결과의 평균(앙상블 평균)이에요. 그래서 실제 미래와 다를 수 있어요.</p>';
 
     // 숫자 읽기 도우미
     const facts = [];
@@ -293,16 +300,24 @@
     let pace = "";
     if (ser[1] != null && ser[2] != null && ser[3] != null) {
       const a = ser[2] - ser[1];
-      const b = (ser[3] - ser[2]) / 2;
-      pace = '<p class="pace">📈 ' + esc(CL.scenCode(sc)) + "에서 20년마다 변하는 크기: 전반기→중반기 <b>" + esc((a >= 0 ? "+" : "−") + CL.fmtNum(Math.abs(a), dec) + CL.unitShort(id)) +
-        "</b>, 중반기→후반기 <b>약 " + esc((b >= 0 ? "+" : "−") + CL.fmtNum(Math.abs(b), dec) + CL.unitShort(id)) + "</b>" +
-        (Math.abs(b) > Math.abs(a) * 1.3 ? " — 시간이 갈수록 변화가 빨라져요." : Math.abs(b) < Math.abs(a) * 0.7 ? " — 시간이 갈수록 변화가 느려져요." : " — 비슷한 속도로 변해요.") + "</p>";
+      const b = (ser[3] - ser[2]) / 2; // 중반기→후반기는 40년 차이라 20년 단위로 나눔
+      const tiny = 0.5 * Math.pow(10, -dec);
+      const sgn = (x) => (x >= 0 ? "+" : "−") + CL.fmtNum(Math.abs(x), dec) + CL.unitShort(id);
+      let msg;
+      if (Math.abs(a) < tiny && Math.abs(b) < tiny) msg = " — 거의 변하지 않는 전망이에요.";
+      else if (a * b < 0 && Math.abs(a) >= tiny && Math.abs(b) >= tiny) msg = a > 0 ? " — 늘어나다가 후반기에는 줄어드는 전망이에요. 늘 같은 방향으로만 변하지는 않아요." : " — 줄어들다가 후반기에는 다시 늘어나는 전망이에요. 늘 같은 방향으로만 변하지는 않아요.";
+      else if (Math.abs(b) > Math.abs(a) * 1.3) msg = " — 시간이 갈수록 변화가 빨라지는 전망이에요.";
+      else if (Math.abs(b) < Math.abs(a) * 0.7) msg = " — 시간이 갈수록 변화가 느려지는 전망이에요.";
+      else msg = " — 비슷한 속도로 변하는 전망이에요.";
+      pace = '<p class="pace">📈 ' + esc(CL.scenCode(sc)) + "에서 20년마다 변하는 크기: 전반기→중반기 <b>" + esc(sgn(a)) +
+        "</b>, 중반기→후반기 <b>약 " + esc(sgn(b)) + "</b>" + msg + "</p>";
     }
     h += '<div class="facts-box"><b>🔢 숫자 읽기 도우미</b> <small>보고서에 쓸 근거는 📌로 담아 두세요 (지금 ' + evidenceCount() + "개)</small>" + pace + '<ul class="facts">' + facts.map(factLine).join("") + "</ul></div>";
     h += thinkBox([
       "내 예측과 가장 많이 다른 기간은 언제인가요? 왜 그렇게 예측했나요?",
       "두 시나리오의 차이는 언제부터 커지나요? 그 이유는 무엇일까요?",
       "이 변화는 누구의 생활에 가장 먼저 영향을 줄까요?",
+      "더 탐구하기: 기상청 포털에서 중간 시나리오(SSP2-4.5, SSP3-7.0)나 우리 동네(읍면동) 값을 찾아 비교해 보세요. ⑤ 자료 찾기에서 앱에 넣을 수 있어요.",
     ]);
     h += "</section>";
 
@@ -320,6 +335,8 @@
     h += (regs.length > 1 ? CL.legend(regs.map((x) => [CL.regionColor(x), x])) : "") + '<div class="chart" data-chart="regions"></div>';
     h += '<div class="chart-foot"><span class="small muted">점을 누르면 값이 보여요.</span>' + tableToggle("regions") + "</div>";
     if (S.tables.regions) h += regionTable(regs, id, sc);
+    const scale = regs.map((x) => (D.regionNotes && D.regionNotes[x] ? x + CL.josa(x, "은", "는") + " " + D.regionNotes[x] : "")).filter(Boolean);
+    if (scale.length > 1) h += '<p class="note">📏 ' + esc(scale.join(", ")) + "이에요. 넓이가 다른 지역을 비교한다는 점도 생각해 봐요.</p>";
     if (m.note) h += '<p class="note">ℹ️ ' + esc(m.note) + "</p>";
     h += "</section>";
 
@@ -437,6 +454,8 @@
     let h = '<section class="panel"><div class="panel-head"><div><h3>❓ 궁금한 것을 질문으로 만들어요</h3><p class="panel-desc">좋은 질문이 탐구의 출발점이에요. 질문 틀을 누르고 ___ 부분을 바꿔 보세요.</p></div></div>';
     h += '<div class="chips">' + Q_STARTERS.map((x, i) => '<button class="chip" data-act="q-starter" data-i="' + i + '">' + esc(x) + "</button>").join("") + "</div>";
     h += '<div class="q-add"><input id="qInput" type="text" maxlength="160" placeholder="예: 왜 사과 재배지가 북쪽으로 옮겨 갈까?" aria-label="새 질문" enterkeyhint="done"><button class="btn primary" data-act="q-add">질문 추가</button></div>';
+    h += '<div class="guide"><b>🧭 길잡이 · 좋은 탐구 질문인지 확인해요</b><span>① 자료나 조사로 답을 찾아볼 수 있나요? ② 우리의 먹거리·옷·집과 연결되나요? ' +
+      "③ ‘예/아니요’보다 ‘왜·어떻게·얼마나’를 묻나요? — 처음 떠오른 질문을 조금씩 다듬어 가도 좋아요.</span></div>";
     h += '<span class="field-label">예시 질문 <small>누르면 내 질문에 담겨요</small></span><div class="chips">' + a.sampleQuestions.map((x, i) => {
       const on = qs.some((q) => q.q === x);
       return '<button class="chip" data-act="q-sample" data-i="' + i + '" aria-pressed="' + on + '">' + esc(x) + '<span class="plus" aria-hidden="true">' + (on ? "✓" : "＋") + "</span></button>";
@@ -452,8 +471,8 @@
         '<p class="q-text">' + (q.star ? '<span class="badge">탐구 질문</span> ' : "") + esc(q.q) + "</p>" +
         '<button class="q-del" data-act="q-del" data-id="' + esc(q.id) + '" aria-label="질문 지우기">×</button></div>' +
         '<details data-open-key="' + k + '"' + (S.open[k] || q.star ? " open" : "") + "><summary>" + (q.answer ? "✅ 내가 찾은 답" : "✏️ 내가 찾은 답 적기") + "</summary>" +
-        '<textarea class="idea short" data-q-answer="' + esc(q.id) + '" placeholder="조사한 내용을 내 말로 정리해요. 자료에서 확인한 사실과 내 생각을 구분해 써요.">' + esc(q.answer || "") + "</textarea>" +
-        '<input class="text-input" data-q-src="' + esc(q.id) + '" maxlength="200" placeholder="출처 (예: 농촌진흥청 누리집, 2026-10-13 확인)" value="' + esc(q.src || "") + '"></details></li>';
+        '<textarea class="idea short" data-q-answer="' + esc(q.id) + '" placeholder="조사한 내용을 내 말로 정리해요. 예: (자료에서 확인한 사실) ○○에 따르면 … / (내 생각) 그래서 …">' + esc(q.answer || "") + "</textarea>" +
+        '<input class="text-input" data-q-src="' + esc(q.id) + '" maxlength="200" placeholder="출처 (예: 농사로 누리집, 조사한 날짜)" value="' + esc(q.src || "") + '"></details></li>';
     }).join("") + "</ul></section>";
 
     h += '<section class="panel"><div class="panel-head"><div><h3>🔍 답을 찾을 곳</h3></div></div><ul class="research">' + a.research.map((x) =>
@@ -486,7 +505,7 @@
     const errs = results.filter((x) => x.status === "err");
     const hyps = CL.getHyps(S.area);
     h += '<section class="panel"><div class="panel-head"><div><h3>💡 데이터로 세워 보는 가설</h3><p class="panel-desc">' + esc(r + " · " + CL.scenCode(sc) + " · " + CL.periodLabel(p)) +
-      " 자료가 기준을 넘으면 가설이 나타나요. 가설은 정답이 아니라 조사해 볼 출발점이에요.</p></div></div>";
+      " 자료가 기준을 넘으면 가설이 나타나요. 가설은 정답이 아니라 조사해 볼 출발점이에요. 기준값은 수업을 위해 정한 예시 기준이며, 과학적으로 정해진 한계값이 아니에요.</p></div></div>";
     if (on.length) h += '<ul class="recs">' + on.map((x) => hypItem(x, hyps)).join("") + "</ul>";
     else h += '<p class="empty-note">이 기간·시나리오 자료로는 기준을 넘는 가설이 없어요. 후반기나 ' + esc(CL.scenCode("high")) + "로 바꿔 비교해 보세요.</p>";
     if (errs.length) h += '<ul class="recs">' + errs.map((x) => '<li class="rec err">⚠ rules.js 규칙 오류 — ' + esc(x.error) + "</li>").join("") + "</ul>";
@@ -495,6 +514,8 @@
       h += '<details class="more" data-open-key="' + k + '"' + (S.open[k] ? " open" : "") + "><summary>기준을 넘지 않은 가설 " + rest.length + "개 보기</summary><ul class=\"recs\">" +
         rest.map((x) => hypItem(x, hyps)).join("") + "</ul></details>";
     }
+    h += '<div class="guide"><b>🧭 길잡이 · 가설을 확인하려면</b><span>이 가설을 뒷받침하는 자료와 반대되는 자료는 무엇일까요? 기후 말고 어떤 조건(비용, 기술, 사람들의 생활 방식)도 함께 따져야 할까요? ' +
+      "❓ 궁금증 질문의 ‘답을 찾을 곳’에서 찾아보세요.</span></div>";
     h += '<p class="note">⚠️ ' + esc(a.caution) + "</p></section>";
     if (hyps.length) {
       h += '<section class="panel"><div class="panel-head"><div><h3>📝 내가 고른 가설</h3><p class="panel-desc">설계 카드와 보고서에서 다시 볼 수 있어요.</p></div></div><ul class="evi-picked">' +
@@ -536,8 +557,10 @@
       if (X.filterKey === "cat") return c.cat === f && (S.tag === "전체" || (c.tags || []).indexOf(S.tag) >= 0);
       return f === "전체" || c[X.filterKey] === f;
     });
+    if (X.notes && X.notes.length) h += '<div class="guide"><b>📘 알아 두기</b>' + X.notes.map((n) => "<span>" + esc(n) + "</span>").join("") + "</div>";
     h += '<div class="xcards">' + (cards.length ? cards.map((c) => xcard(c, X, b)).join("") : '<p class="empty-note">조건에 맞는 카드가 없어요.</p>') + "</div>";
     if (X.rateNote) h += '<p class="note">' + esc(X.rateNote) + "</p>";
+    h += '<p class="note">카드 내용은 탐구의 출발점이에요. ❓ 질문을 담아 가서 믿을 만한 자료로 확인해 보세요.</p>';
     h += "</section>";
     h += '<div class="next-row"><button class="btn primary" data-act="sub" data-v="build">✏️ 설계 카드 만들기 → <small>(' + b.picks.length + "개 고름)</small></button></div>";
     return h;
@@ -597,6 +620,8 @@
     h += "</section></div><div>";
     h += '<section class="panel sticky-preview"><div class="panel-head"><div><h3>미리 보기</h3><p class="panel-desc">이 카드는 ③ 탐구 보고서와 ④ 나만의 웹에 자동으로 들어가요.</p></div></div>' +
       '<div id="designPreview">' + CL.designCardHtml(area) + "</div>";
+    h += '<div class="guide"><b>🧭 길잡이 · 내 설계를 점검해요</b><span>□ 어떤 기후 변화(자료의 수치)에 대응하나요? □ 누가·언제·어디서 쓰나요? ' +
+      "□ 기대 효과와 함께 비용·에너지·환경 영향 같은 한계도 생각했나요? □ 기후 말고 더 확인해야 할 자료는 무엇인가요?</span></div>";
     const hyps = CL.getHyps(area);
     if (hyps.length) h += '<span class="field-label">📝 내가 고른 가설</span><ul class="plain">' + hyps.map((x) => "<li>💡 " + esc(x) + "</li>").join("") + "</ul>";
     const ev = CL.getEvidence();
@@ -610,21 +635,25 @@
      ⑤ 자료 찾기
      ====================================================================== */
   const SOURCES = [
-    { name: "기상청 기후정보포털 — 행정구역별 기후변화 전망", url: "https://www.climate.go.kr/home/CCS/contents_2021/33_2_areapoint_basic_ssp.php", desc: "지역·SSP·기후 요소를 골라 기간별 그래프와 표를 볼 수 있어요." },
+    { name: "기상청 기후정보포털 — 행정구역별 기후변화 전망", url: "https://www.climate.go.kr/home/CCS/contents_2021/33_2_areapoint_basic_ssp.php", desc: "이 앱 기본값의 출처예요. 지역·SSP·기후 요소를 골라 기간별 그래프와 표를 볼 수 있어요. (용인시는 ‘기초’, 서울특별시는 ‘광역’으로 조회)" },
     { name: "기상청 기후변화 상황지도", url: "https://www.climate.go.kr/atlas/", desc: "지도에서 지역 차이와 과거부터 미래까지의 변화를 찾아보세요." },
     { name: "기상자료개방포털", url: "https://data.kma.go.kr/", desc: "실제로 관측된 과거 기온·강수량을 찾을 수 있어요." },
-    { name: "경기도 기후변화 전망보고서(2023)", url: "https://www.climate.go.kr/home/cc_data/2024/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EA%B8%B0%ED%9B%84%EB%B3%80%ED%99%94%20%EC%A0%84%EB%A7%9D%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf", desc: "이 앱의 용인시 기본값 출처예요." },
-    { name: "서울특별시 기후변화 전망보고서(2023)", url: "https://www.climate.go.kr/home/cc_data/2024/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B8%B0%ED%9B%84%EB%B3%80%ED%99%94%20%EC%A0%84%EB%A7%9D%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf", desc: "이 앱의 서울특별시 기본값 출처예요." },
+    { name: "경기도 기후변화 전망보고서(2023)", url: "https://www.climate.go.kr/home/cc_data/2024/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EA%B8%B0%ED%9B%84%EB%B3%80%ED%99%94%20%EC%A0%84%EB%A7%9D%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf", desc: "용인시의 연평균기온·연강수량·폭염일수 전망이 실려 있어요(앱 값과 같아요)." },
+    { name: "서울특별시 기후변화 전망보고서(2023)", url: "https://www.climate.go.kr/home/cc_data/2024/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B8%B0%ED%9B%84%EB%B3%80%ED%99%94%20%EC%A0%84%EB%A7%9D%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf", desc: "서울특별시의 연평균기온·연강수량·폭염일수 전망이 실려 있어요(앱 값과 같아요)." },
     { name: "기후변화 시나리오 자료 안내", url: "https://www.climate.go.kr/home/CCS/_image/web_manual/data_information.pdf", desc: "전망 자료의 공간·시간 범위와 기후 요소를 확인해요." },
-    { name: "농촌진흥청", url: "https://www.rda.go.kr/", desc: "작물 재배지·재배 기술 자료를 찾아요." },
+    { name: "농사로(농촌진흥청 농업기술포털)", url: "https://www.nongsaro.go.kr/", desc: "작물별 재배 환경·재배 시기·재배 기술을 찾아요." },
+    { name: "농촌진흥청", url: "https://www.rda.go.kr/", desc: "기후변화와 농업 연구 자료를 찾아요." },
     { name: "과수생육·품질관리시스템", url: "https://fruit.nihhs.go.kr/", desc: "과수 생육 정보와 재배 적지 지도를 찾아요." },
   ];
 
   function findView() {
-    let h = sectionTitle("⑤ 자료 더 찾기", "기상청 포털에서 다른 지역이나 다른 지표(열대야일수, 5일 최다강수량 등)를 찾아 앱에 넣어 보세요.");
+    let h = sectionTitle("⑤ 자료 더 찾기", "기상청 포털에서 우리 동네 같은 다른 지역의 값을 찾아 앱에 넣고 비교해 보세요.");
     h += '<section class="panel"><div class="panel-head"><div><h3>🧭 기상청 포털에서 직접 찾기</h3></div></div>' +
-      '<ol class="steps-list"><li>기후정보포털 → 기후변화 시나리오 → <b>행정구역별 전망</b></li><li>시·도, 시·군·구와 <b>SSP 경로</b> 고르기</li><li>기온·강수·폭염·열대야 등 <b>기후 요소</b> 고르기</li>' +
-      "<li>그래프·표에서 <b>기간과 단위</b> 확인하고 값 옮겨 적기</li></ol>" +
+      '<ol class="steps-list"><li>기후정보포털 → 기후변화 시나리오 → <b>행정구역</b> 화면 열기 (아래 버튼)</li>' +
+      "<li><b>시나리오</b>(SSP1-2.6, SSP5-8.5 등)와 <b>행정구역</b>(광역·기초·읍면동) 고르기</li>" +
+      "<li><b>요소</b> 고르기: 기후요소(평균기온·강수량) 또는 극한기후지수(폭염일수·열대야일수·5일 최다강수량 등)</li>" +
+      "<li><b>기간</b>을 ‘21세기 전망 – 전/중/후반기’로 고르고 <b>조회</b></li>" +
+      "<li>표에서 <b>기간과 단위</b>를 확인하고 값 옮겨 적기 (현재 2000~2019, 전반기 2021~2040, 중반기 2041~2060, 후반기 2081~2100)</li></ol>" +
       '<a class="btn primary" href="' + esc(SOURCES[0].url) + '" target="_blank" rel="noopener">행정구역별 전망 열기 ↗</a></section>';
 
     // 직접 입력
@@ -657,8 +686,10 @@
     h += '<section class="panel"><div class="panel-head"><div><h3>📚 공식 자료</h3></div></div><ul class="sources">' + SOURCES.map((x) =>
       '<li><a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.name) + " ↗</a><span>" + esc(x.desc) + "</span></li>").join("") + "</ul></section>";
     h += '<section class="panel notice"><h3>⚠️ 자료를 해석할 때 기억할 점</h3><ul class="plain">' +
-      "<li>미래 기후는 날씨 예보가 아니라 시나리오별 <b>20년 기간 평균</b> 전망이에요.</li>" +
-      "<li>연강수량만으로 장마 시작·끝 날짜나 폭우·폭설의 날짜와 양을 알 수 없어요. 월별 강수와 강수 극한 지수를 따로 찾아보세요.</li>" +
+      "<li>미래 기후는 날씨 예보가 아니라 시나리오별 <b>20년 기간 평균</b> 전망이에요. 기후모델 결과의 평균이라 불확실성이 있어요.</li>" +
+      "<li><b>현재(2000–2019)</b> 값도 관측값이 아니라 기후모델이 과거를 재현한 값이에요. 실제 관측 기록은 기상자료개방포털에서 찾을 수 있어요.</li>" +
+      "<li>폭염일수·열대야일수는 1년 동안의 <b>합계</b>예요. 그만큼 연속으로 이어진다는 뜻이 아니에요.</li>" +
+      "<li>연강수량만으로 장마 시작·끝 날짜나 폭우·폭설의 날짜를 알 수 없어요. 큰비의 크기는 5일 최다강수량 같은 극한 지수로, 계절별 변화는 월별 강수량으로 따로 확인해요.</li>" +
       "<li>작물 재배 가능성은 토양·품종·물·병해충·기술도 함께 살펴야 해요.</li>" +
       "<li>소재·건축 장치의 성능은 기후 표만으로 증명되지 않아요. 따로 조사하고 가정을 밝혀요.</li></ul></section>";
     h += '<section class="panel"><h3>🎬 영화 속 기후와 실제 전망</h3><p>영화 《투모로우》(2004)는 갑작스러운 빙하기를 그린 허구의 재난 영화예요. 영화의 극적인 장면과, 수십 년 평균을 보여 주는 기후 시나리오는 무엇이 다를까요?</p>' +
