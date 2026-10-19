@@ -1,0 +1,128 @@
+/* ===== 디자인 의뢰소 시험판 전용 스타일 (../style.css 뒤에 읽음) ===== */
+:root { --gold: #b8860b; --gold-wash: #fff3d6; --ok: #2e7d32; --ok-wash: #e6f2e6; }
+@media (prefers-color-scheme: dark) {
+  :root { --gold: #f0c050; --gold-wash: #3a3018; --ok: #7fd08a; --ok-wash: #1e3322; }
+}
+
+.trial-banner { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--gold-wash); font-size: 14px; font-weight: 700; line-height: 1.5; }
+.trial-banner a { font-weight: 800; }
+.chip:disabled, .mcell:disabled { opacity: 0.45; cursor: default; }
+.warn-text { color: var(--s-high); font-size: 13px; }
+
+/* ---------- 미션 진행 표시 ---------- */
+.mnav { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin-top: 4px; }
+.mnav-step {
+  flex: 1 1 140px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center;
+  min-height: 62px; padding: 8px 14px; text-align: left; border-radius: 16px; border: 2px solid var(--border); background: var(--surface); color: var(--ink);
+}
+.mnav-step .mnav-ic { grid-row: span 2; font-size: 26px; line-height: 1; }
+.mnav-step b { font-size: 13px; color: var(--ink-2); }
+.mnav-step span:last-child { font-size: 16px; font-weight: 800; }
+.mnav-step[aria-current="step"] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.mnav-step.done { background: var(--gold-wash); }
+.mnav-step:disabled { opacity: 0.5; cursor: default; }
+.mnav-stars { align-self: center; padding: 6px 12px; border-radius: 999px; background: var(--gold-wash); color: var(--ink); font-weight: 800; white-space: nowrap; }
+@media (max-width: 560px) {
+  .mnav { gap: 6px; }
+  .mnav-step { flex: 1 1 calc(50% - 6px); min-height: 54px; padding: 6px 10px; }
+  .mnav-step .mnav-ic { font-size: 22px; }
+  .mnav-step span:last-child { font-size: 15px; }
+  .mnav-stars { flex: 1 1 100%; text-align: center; }
+}
+
+/* ---------- 의뢰 요약 막대 ---------- */
+.brief-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 14px; padding: 10px 14px; border-radius: 14px; background: var(--g-wash); font-size: 15px; }
+.brief-who small { color: var(--ink-2); }
+.brief-where { color: var(--ink-2); font-weight: 700; }
+.brief-bar .link-btn { margin-left: auto; }
+
+/* ---------- 미션 1 ---------- */
+.clients { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+@media (min-width: 700px) { .clients { grid-template-columns: 1fr 1fr; } }
+.client-card {
+  display: grid; gap: 10px; padding: 16px; text-align: left; border-radius: 18px; border: 2px solid var(--border);
+  background: var(--surface); color: var(--ink); font-size: 15px; line-height: 1.55;
+}
+.client-card[aria-pressed="true"] { border-color: var(--g); box-shadow: 0 0 0 2px var(--g); background: var(--g-wash); }
+.client-top { display: flex; gap: 12px; align-items: center; }
+.client-top b { font-size: 18px; }
+.client-top small { font-size: 12px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--surface-2); color: var(--ink-2); }
+.client-emoji { font-size: 40px; line-height: 1; }
+.client-req { font-weight: 700; }
+.client-cond { display: flex; flex-wrap: wrap; gap: 6px; }
+.client-cond span { padding: 3px 9px; border-radius: 8px; background: var(--surface-2); font-size: 13px; font-weight: 700; }
+.client-card[aria-pressed="true"] .client-cond span { background: var(--surface); }
+
+.brief-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.brief-card { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); }
+.feel { margin: 6px 0 0; padding: 8px 10px 8px 26px; border-radius: 10px; background: var(--g-wash); font-size: 14px; line-height: 1.5; display: grid; gap: 4px; }
+.feel:empty { display: none; }
+
+/* ---------- 미션 2 · 단서 보드 ---------- */
+.board-count { padding: 4px 12px; border-radius: 999px; background: var(--gold-wash); font-weight: 800; }
+.board { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 900px) { .board { grid-template-columns: 1fr 1fr; } }
+.slot-group { padding: 14px; border-radius: 16px; border: 2px dashed var(--border-strong); background: var(--surface); min-width: 0; }
+.slot-group:has(.slot-count.ok) { border-style: solid; border-color: var(--g); }
+.slot-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 17px; }
+.slot-count { flex: none; padding: 2px 10px; border-radius: 999px; background: var(--surface-2); font-weight: 800; font-size: 14px; }
+.slot-count.ok { background: var(--g); color: var(--g-on-ink); }
+.slot-help { margin: 4px 0 8px; font-size: 14px; color: var(--ink-2); }
+.slot-group > .btn { margin-top: 8px; }
+.picker { margin-top: 10px; padding: 12px; border-radius: 14px; background: var(--surface-2); }
+.picker .cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 8px; }
+.picker .icard { min-height: 100px; padding: 10px 12px; }
+.picker .icard-value { font-size: 24px; }
+.res-item { display: grid; gap: 6px; margin-top: 8px; padding: 10px; border-radius: 12px; background: var(--surface-2); }
+.res-item.ok { background: var(--g-wash); }
+.res-src { display: flex; gap: 6px; }
+.res-src .text-input { flex: 1; min-width: 0; }
+.q-del { flex: none; width: 50px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface); font-size: 20px; color: var(--ink-2); }
+.slot-group .text-input { width: 100%; margin-top: 8px; }
+.slot-group .chips { margin-top: 8px; }
+
+/* ---------- 미션 3 · 아이디어 대결 ---------- */
+.duel { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+@media (min-width: 760px) { .duel { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.duel-card { display: grid; gap: 8px; align-content: start; padding: 14px; border-radius: 16px; border: 2px solid var(--border); background: var(--surface); }
+.duel-card.win { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); background: var(--gold-wash); }
+.duel-letter { font-size: 22px; font-weight: 800; }
+.duel-card .link-btn { justify-self: start; }
+.matrix th, .matrix td { white-space: normal; vertical-align: middle; }
+.matrix thead th { text-align: center; min-width: 96px; }
+.matrix thead th small, .matrix tbody th small { display: block; font-weight: 600; font-size: 12px; color: var(--ink-2); }
+.matrix tbody th { min-width: 150px; max-width: 220px; }
+.matrix td { text-align: center; padding: 4px; }
+.mcell { width: 100%; min-height: 52px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--ink); }
+.mcell:not(:disabled):hover { border-color: var(--g); }
+.mstars { font-size: 20px; letter-spacing: 1px; color: var(--gold); }
+.mstars i { font-style: normal; color: var(--grid); }
+.mempty { font-size: 13px; color: var(--muted); font-weight: 700; }
+.mtotal th, .mtotal td { border-top: 2px solid var(--axis); font-size: 17px; }
+
+/* ---------- 미션 4 · 도전장 ---------- */
+.winner-box { display: grid; gap: 4px; padding: 12px 16px; border-radius: 14px; background: var(--gold-wash); font-size: 16px; }
+.winner-box span { font-size: 15px; color: var(--ink-2); }
+.challenges { display: grid; gap: 12px; margin-top: 12px; }
+.challenge { display: grid; gap: 8px; padding: 14px; border-radius: 16px; border: 2px solid var(--s-high); background: var(--surface); }
+.challenge.cleared { border-color: var(--ok); background: var(--ok-wash); }
+.challenge-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; }
+.challenge-q { font-size: 17px; font-weight: 700; line-height: 1.5; }
+.clear-box { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: var(--ok-wash); font-weight: 800; text-align: center; font-size: 17px; }
+
+/* ---------- ③ 제안서 · 품질 코치 ---------- */
+.coach { border: 2px solid var(--gold); }
+.coach-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.coach-top > div { display: grid; gap: 2px; }
+.coach-level { font-size: 19px; }
+.coach-pct { font-size: 30px; font-weight: 800; }
+.rep-progress-bar { height: 12px; margin-top: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.rep-progress-bar i { display: block; height: 100%; background: var(--gold); border-radius: 999px; transition: width 0.3s; }
+.coach-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.coach-item { min-height: 40px; padding: 6px 12px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 700; }
+.coach-list li.ok .coach-item { background: var(--ok-wash); border-color: transparent; }
+.coach-tip { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--gold-wash); font-size: 15px; }
+.dtable .col-sel { background: var(--gold-wash); }
+.matrix-doc td { text-align: center; }
+.doc .col-sel { background: #fff3d6; }
+.present-body .dtable { font-size: 17px; }
