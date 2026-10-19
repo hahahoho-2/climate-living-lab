@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="기후 디자인 의뢰소">
+  <meta name="description" content="기상청 미래 기후 자료를 근거로 가상 의뢰인의 의뢰를 해결하며 의·식·주 적응 디자인 제안서를 완성하는 학생용 웹앱 (시험판)">
+  <title>기후 적응 디자인 의뢰소 (시험판)</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23123f2f'/%3E%3Cpath d='M12 44 L24 32 L34 38 L52 18' stroke='%23eb6834' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="mission.css">
+  <script>
+    // data.js · rules.js · explore.js · missions.js 에 오타가 있을 때 줄 번호를 알려 주기 위한 기록
+    window.__loadErrors = [];
+    window.addEventListener("error", function (e) {
+      if (e && e.filename) window.__loadErrors.push({ file: e.filename.split("/").pop(), line: e.lineno, msg: e.message });
+    }, true);
+  </script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="eyebrow">고1 기술·가정 · 기후와 생활문화 탐구</p>
+      <h1>기후 적응 디자인 의뢰소</h1>
+      <p class="sub">미래 기후 자료를 근거로 의뢰인의 고민을 해결하는 의·식·주 디자인 제안서를 만들어 봐요.</p>
+      <p class="trial-banner">🧪 새로 만든 <b>시험판</b>이에요. ① 기후 예측은 기존 판과 같고, ②·③이 새 활동이에요. 기록은 기존 판과 따로 저장돼요. <a href="../">기존 판으로 가기 →</a></p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="wrap">
+      <nav class="tabs" id="tabs" role="tablist" aria-label="탐구 단계"></nav>
+    </div>
+  </div>
+
+  <main class="wrap" id="main" tabindex="-1">
+    <noscript><p class="panel">이 페이지는 자바스크립트가 켜져 있어야 동작해요.</p></noscript>
+  </main>
+
+  <footer class="wrap foot">
+    <p>기본 자료: 기상청 기후정보포털 행정구역별 기후변화 전망(SSP1-2.6 · SSP5-8.5, 2026-10-15 조회) · 현재(2000–2019, 모델 재현값)와 미래 20년 기간 평균</p>
+    <p>기후 전망은 시나리오에 따른 장기 평균이에요. 의뢰인은 수업을 위해 만든 가상 인물이에요. 의·식·주 이미지는 교육용 상상 그림이에요. 내가 쓴 기록은 이 기기에만 저장돼요.</p>
+    <div class="foot-tools"><a href="../">← 기존 판</a><a href="../rpg/">🎮 여울섬 기후 생활 RPG</a><a href="../qr.html">QR 코드 만들기</a></div>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" hidden></div>
+
+  <script src="../data.js"></script>
+  <script src="../rules.js"></script>
+  <script src="../explore.js"></script>
+  <script src="missions.js"></script>
+  <script src="js/util.js"></script>
+  <script src="../js/sitegen.js"></script>
+  <script src="js/mission.js"></script>
+  <script src="js/proposal.js"></script>
+  <script src="../js/webmaker.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
