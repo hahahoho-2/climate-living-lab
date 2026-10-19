@@ -111,6 +111,13 @@ p { margin: 0; }
 .masthead h1 { font-size: 27px; font-weight: 800; margin-top: 4px; letter-spacing: -0.01em; color: var(--brand); }
 .sub { margin-top: 4px; color: var(--ink-2); font-size: 16px; }
 @media (min-width: 700px) { .masthead { padding-top: 26px; } .masthead h1 { font-size: 32px; } }
+.rpg-link {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; margin-top: 10px;
+  min-height: 46px; padding: 8px 16px; border-radius: 14px;
+  background: var(--brand-soft); color: var(--brand); border: 1px solid var(--border);
+  font-size: 16px; font-weight: 800; text-decoration: none;
+}
+.rpg-link span { font-weight: 700; color: var(--ink-2); }
 
 .controls { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--border); }
 .tabs { display: flex; gap: 6px; padding: 10px 0; overflow-x: auto; scrollbar-width: none; }
