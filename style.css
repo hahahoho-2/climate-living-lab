@@ -118,6 +118,7 @@ p { margin: 0; }
   font-size: 16px; font-weight: 800; text-decoration: none;
 }
 .rpg-link span { font-weight: 700; color: var(--ink-2); }
+.future-link { margin-right: 8px; }
 
 .controls { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--border); }
 .tabs { display: flex; gap: 6px; padding: 10px 0; overflow-x: auto; scrollbar-width: none; }
@@ -592,7 +593,7 @@ select.text-input { appearance: auto; }
 /* ===== 바닥글·오류 ===== */
 .foot { padding-top: 8px; padding-bottom: max(28px, env(safe-area-inset-bottom)); font-size: 14px; color: var(--ink-2); }
 .foot p + p { margin-top: 4px; }
-.foot-tools { display: flex; gap: 16px; margin-top: 6px; }
+.foot-tools { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 6px; }
 .foot-tools a { font-weight: 800; padding: 8px 0; }
 .error-box { border: 2px solid var(--s-high); }
 .error-box pre { white-space: pre-wrap; font-size: 14px; background: var(--surface-2); padding: 10px; border-radius: 10px; }

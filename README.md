@@ -6,14 +6,17 @@
 - 로그인 없음 · 서버 없음 · 기후 자료가 앱 안에 들어 있어 한 번 열린 뒤에는 인터넷이 끊겨도 동작
 - 학생 기록(예측·질문·보고서·나만의 웹)은 **그 기기의 브라우저에만** 저장되고 어디로도 전송되지 않음
 
-## 이 저장소에 들어 있는 두 가지
+## 이 저장소에 들어 있는 것
 
 | 앱 | 학생 접속 주소 | 폴더 |
 |---|---|---|
 | 미래 기후와 의식주 탐구실 (웹앱) | https://hahahoho-2.github.io/climate-living-lab/ | 저장소 맨 위(루트) |
+| 미래 의식주 생활문화 탐구실 (웹앱, 종합편) | https://hahahoho-2.github.io/climate-living-lab/future/ | `future/` — 안내는 `future/README.md`, 교사용 안내는 `future/teacher.html` |
+| 기후 적응 디자인 의뢰소 (시험판) | https://hahahoho-2.github.io/climate-living-lab/mission/ | `mission/` — 안내는 `mission/README.md` |
 | 여울섬 기후 생활 RPG (게임) | https://hahahoho-2.github.io/climate-living-lab/rpg/ | `rpg/` — 안내는 `rpg/README.md`, `rpg/실시간광장_안내.md` |
 
-- 탐구실 첫 화면의 **🎮 여울섬 기후 생활 RPG** 버튼으로 게임에 들어갈 수 있어요.
+- **미래 의식주 생활문화 탐구실**은 기후 변화를 여러 변화 요소(인구·가족, 디지털 전환, 자원·환경, 가치·소비) 가운데 하나로 두고, 스마트팜·대체 식품·스마트 의류·스마트 홈·3D 프린팅 건축 같은 미래 기술을 종합적으로 탐구하는 판이에요. 기후 수치는 이 저장소의 `data.js`를 그대로 읽어요.
+- 탐구실 첫 화면의 **🧭 미래 의식주 생활문화 탐구실**, **🎮 여울섬 기후 생활 RPG** 버튼으로 각각 들어갈 수 있어요.
 - RPG는 원래 `mirae-gihu-daebi` 저장소에서 옮겨 왔어요. 같은 도메인(`hahahoho-2.github.io`)이라 학생 기기에 저장된 섬 기록은 새 주소에서도 그대로 이어져요.
 
 ---
