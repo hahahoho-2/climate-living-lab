@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+  <title>교사용 안내 — 미래 의식주 생활문화 탐구실</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="future.css">
+  <style>
+    .t-doc h2 { font-size: 22px; font-weight: 800; margin: 28px 0 10px; }
+    .t-doc h3 { font-size: 18px; font-weight: 800; margin: 18px 0 6px; }
+    .t-doc p, .t-doc li { font-size: 16px; }
+    .t-doc .dtable th, .t-doc .dtable td { white-space: normal; text-align: left; vertical-align: top; }
+    .t-doc .dtable td.c { text-align: center; white-space: nowrap; }
+    .fix-old { color: var(--ink-2); }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .toc a { font-weight: 700; font-size: 15px; padding: 6px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; color: #111; font-size: 12px; }
+      .panel { border: 1px solid #ccc; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="eyebrow">교사용 · 고1 기술·가정 Ⅰ. 생활 문화와 디지털 환경 (03~05)</p>
+      <h1>미래 의식주 생활문화 탐구실 — 교사용 안내</h1>
+      <p class="sub">수업 흐름, 화면별 지도 요점, 평가 기준, 내용 검증표, 참고 자료 사용 시 주의할 표현을 정리했어요.</p>
+      <div class="mast-links no-print">
+        <a class="rpg-link" href="./">← 학생용 탐구실</a>
+        <button type="button" class="btn small" onclick="window.print()">🖨️ 인쇄·PDF</button>
+      </div>
+      <nav class="toc no-print" aria-label="목차">
+        <a href="#goal">수업 목표</a><a href="#plan">차시 계획</a><a href="#tips">지도 요점</a><a href="#rubric">평가 기준</a><a href="#verify">내용 검증표</a><a href="#key">③ 정답·해설</a><a href="#fix">주의할 표현</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap t-doc" id="main">
+    <section class="panel" id="goal">
+      <h2>1. 수업의 관점과 목표</h2>
+      <p>미래 의식주 생활문화는 한 가지 원인으로 바뀌지 않습니다. 교과서(22~41쪽)는 의·식·주마다 <b>소비자 욕구, 가족 구조, 디지털 전환, 환경(기상 이변·자원) 변화</b>를 미래 변화 요소로 제시합니다. 이 탐구실은 <b>기후 변화를 여러 변화 요소 가운데 하나</b>로 두고, 스마트팜·대체 식품·스마트 의류·스마트 홈·3D 프린팅 건축 같은 기술의 적용을 종합적으로 따져 보게 합니다.</p>
+      <ul class="plain">
+        <li>미래 의식주 생활문화를 바꾸는 변화 요소를 자료(통계·전망)를 근거로 설명할 수 있다.</li>
+        <li>미래 기술의 원리·현황·기대·한계를 근거를 들어 평가하고, 아직 단정할 수 없는 것을 구별할 수 있다.</li>
+        <li>변화 요소와 기술을 비판적으로 수용해 안전하고 지속가능한 미래 의·식·주 생활을 설계할 수 있다.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="plan">
+      <h2>2. 차시 계획 (5차시 예시)</h2>
+      <div class="table-scroll"><table class="dtable">
+        <thead><tr><th scope="col">차시</th><th scope="col">활동</th><th scope="col">탐구실 화면</th><th scope="col">산출물</th></tr></thead>
+        <tbody>
+          <tr><td class="c">1</td><td>도입: ‘20년 뒤 나의 하루’ 상상 → 변화 요소 다섯 가지 읽기. 기후 변화는 기상청 전망 그래프로 범위(시나리오) 읽기</td><td>① 변화 읽기 (+ 기후 자료 탐구실 선택)</td><td>변화 요소별 한 문장, 📌 근거 2개</td></tr>
+          <tr><td class="c">2</td><td>식생활 기술 전문가 학습(직소): 스마트팜·식물성 대체식품·식용 곤충·배양육·푸드테크·HMR</td><td>② 기술 탐색 — 식 (온실가스 그래프)</td><td>⭐ 후보, 내 질문</td></tr>
+          <tr><td class="c">3</td><td>의·주생활 기술 탐색, 스마트 홈 실험실(센서 규칙·통신 방식·다중 인증), 전통(한복·한옥)과 연결</td><td>② 기술 탐색 — 의·주</td><td>센서 규칙, ⭐ 후보</td></tr>
+          <tr><td class="c">4</td><td>사실·주장 가려내기(모둠 토의 후 판단) → 설계 대상·시기·변화 요소 정하고 의·식·주 설계</td><td>③ → ④ A~C</td><td>판단 결과, 의·식·주 설계표</td></tr>
+          <tr><td class="c">5</td><td>미래의 하루 쓰기, 다섯 렌즈 점검, 동료 피드백, 보고서 저장·발표</td><td>④ D~E → ⑤ 보고서</td><td>탐구 보고서(PDF·Word)</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">기록은 학생 기기의 브라우저에만 저장됩니다. 기기를 바꾸거나 브라우저 기록을 지우면 사라지므로, 차시가 끝날 때 ⑤에서 Word·PDF로 저장하게 해 주세요.</p>
+    </section>
+
+    <section class="panel" id="tips">
+      <h2>3. 화면별 지도 요점</h2>
+      <h3>① 변화 읽기</h3>
+      <ul class="plain">
+        <li>기후 그래프의 ‘현재’는 관측값이 아니라 기후모델이 2000–2019년을 재현한 값입니다. 미래 값은 시나리오(SSP1-2.6 저탄소, SSP5-8.5 고탄소)에 따른 20년 평균입니다.</li>
+        <li>인구 통계는 발표 기관과 기준 시점(예: 2025 인구주택총조사, 2026-07-28 발표)을 함께 읽게 합니다.</li>
+      </ul>
+      <h3>② 기술 탐색</h3>
+      <ul class="plain">
+        <li>카드마다 ‘무엇인가 → 어떻게 작동하나 → 지금 어디까지 → 기대·한계 → 아직 단정할 수 없는 것’ 순서입니다. 특히 <b>‘아직 단정할 수 없는 것’</b>을 학생이 자기 말로 설명하게 해 주세요.</li>
+        <li>온실가스 그래프는 식품 1kg당·전 세계 평균값입니다. 단백질 기준으로 바꾸면 순서가 달라질 수 있고, 곤충·배양육은 자료가 없다는 점이 토의 거리입니다.</li>
+        <li>스마트 홈 실험실: 센서 규칙을 만든 뒤 ‘센서가 고장 나면? 반려동물이 있으면?’을 묻고, 다중 인증 판별기로 ‘같은 종류의 반복은 다중 인증이 아님’, ‘아이디는 인증 요소가 아님’을 확인합니다.</li>
+      </ul>
+      <h3>③ 사실·주장 가려내기</h3>
+      <ul class="plain">
+        <li>세 가지 판단(맞는 설명 / 틀리거나 과장 / 아직 단정할 수 없음)을 씁니다. 정답 맞히기보다 <b>판단의 근거</b>를 말하게 하는 것이 목적입니다.</li>
+        <li>교과서나 참고 자료의 과장된 표현(아래 7절)을 함께 찾아보는 활동으로 확장할 수 있습니다.</li>
+      </ul>
+      <h3>④ 미래 생활 설계 · ⑤ 보고서</h3>
+      <ul class="plain">
+        <li>설계 대상 인물은 가상 인물입니다. 실제 인물(가족 등)의 개인정보를 쓰지 않게 안내해 주세요.</li>
+        <li>‘근거’ 칸에는 사실과 출처를 함께 쓰게 하고(📌 담은 근거 넣기 활용), ‘걱정되는 점과 대안’을 반드시 쓰게 합니다.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="rubric">
+      <h2>4. 평가 기준 (예시)</h2>
+      <div class="table-scroll"><table class="dtable">
+        <thead><tr><th scope="col">요소</th><th scope="col">상</th><th scope="col">중</th><th scope="col">하</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">변화 요소 분석</th><td>2개 이상의 변화 요소를 자료(수치·출처)로 설명하고 의·식·주 변화와 연결한다.</td><td>변화 요소를 설명하지만 자료나 연결이 일부 부족하다.</td><td>변화 요소를 나열하는 데 그친다.</td></tr>
+          <tr><th scope="row">근거 활용</th><td>설계의 선택마다 사실과 출처를 제시한다.</td><td>근거를 제시하지만 출처가 일부 빠진다.</td><td>근거 없이 의견만 쓴다.</td></tr>
+          <tr><th scope="row">비판적 평가</th><td>기술의 한계와 ‘아직 단정할 수 없는 것’을 구별해 설명한다.</td><td>한계를 쓰지만 불확실성은 구별하지 못한다.</td><td>장점만 쓴다.</td></tr>
+          <tr><th scope="row">설계의 종합성</th><td>의·식·주가 하루 안에서 연결되고, 설계 대상의 필요에 맞는다.</td><td>의·식·주를 각각 설계했으나 연결이 약하다.</td><td>한두 분야만 설계했다.</td></tr>
+          <tr><th scope="row">점검과 대안</th><td>3개 이상의 렌즈로 문제를 찾고 구체적인 대안을 낸다.</td><td>문제를 찾지만 대안이 막연하다.</td><td>점검을 하지 않았다.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel" id="verify">
+      <h2>5. 내용 검증표</h2>
+      <p>학생 화면의 ‘지금 어디까지 왔나’와 변화 요소의 사실 문장을 출처와 대조했습니다. 확인일: <b id="checked"></b>. 미래 기술은 빠르게 바뀌므로 수업 전에 최신 상황(특히 배양육 인정 현황, 3D 프린팅 건축 제도)을 다시 확인해 주세요.</p>
+      <div id="verify-table"></div>
+    </section>
+
+    <section class="panel" id="key">
+      <h2>6. ③ 사실·주장 가려내기 정답·해설</h2>
+      <div id="key-table"></div>
+    </section>
+
+    <section class="panel" id="fix">
+      <h2>7. 참고 자료 사용 시 주의할 표현</h2>
+      <p>함께 쓰는 교과서와 슬라이드 자료 가운데, 학생에게 오개념을 줄 수 있는 표현과 바꿔 쓸 표현을 정리했습니다. (교과서는 PDF 글자 기준으로 확인했으니 인쇄본과 한 번 더 대조해 주세요.)</p>
+      <div class="table-scroll"><table class="dtable">
+        <thead><tr><th scope="col">자료·위치</th><th scope="col">원래 표현</th><th scope="col">주의할 점과 바꿔 쓸 표현</th></tr></thead>
+        <tbody>
+          <tr><td>교과서 24쪽 곤충 단백질 기반 식품</td><td class="fix-old">고단백·저지방이면서 무기질까지 풍부한 완전식품으로 알려졌다</td><td>영양 성분은 종·성장 단계·먹이에 따라 크게 다르고 지방이 많은 종도 있습니다(FAO, 2013). → ‘단백질이 풍부한 종이 많다’. 갑각류 알레르기 교차 반응 주의도 함께 안내.</td></tr>
+          <tr><td>교과서 24쪽 곤충 그림 이름</td><td class="fix-old">아프리카 왕거저리 유충, 쌍벌 귀뚜라미 (PDF 글자)</td><td>식품 원료 공식 명칭은 ‘아메리카왕거저리 애벌레’, ‘쌍별귀뚜라미’입니다(농촌진흥청). 인쇄본 표기를 확인해 주세요.</td></tr>
+          <tr><td>교과서 24쪽 배양육</td><td class="fix-old">실험실에서 키워 내는 식용 고기</td><td>상용 생산은 배양 탱크(생물반응기)를 갖춘 시설에서 이루어집니다. 국내는 2026년 7월까지 인정 0건(신청 2건)입니다.</td></tr>
+          <tr><td>교과서 37쪽 주생활 미래 변화 요소</td><td class="fix-old">주거 부족 문제 등은 … 3D 프린팅 주거로 해결할 수 있게 되었다</td><td>시범 단지·초기 상용화 단계이며 인허가·안전 기준·장비 운반 등 과제가 있습니다. → ‘해결에 기여할 가능성이 있다’.</td></tr>
+          <tr><td>교과서 40쪽 3D 프린팅 장점</td><td class="fix-old">공사비와 공사 기간을 줄일 수 있다 / 사고를 최소화할 수 있다</td><td>사례에 따라 다릅니다. 미국 첫 대규모 단지는 예상보다 비용이 다소 높았다는 보도가 있습니다. → ‘줄일 수 있는 가능성이 있다’.</td></tr>
+          <tr><td>교과서 41쪽 카드 뉴스 사례 2</td><td class="fix-old">2021년 아파트 700개 단지 총 17만 가구의 월패드가 악성 프로그램에 노출</td><td>경찰청 수사 결과 발표(2022-12-20)는 2021년 8~11월 전국 638개 단지, 40만 4,847가구의 월패드가 해킹 대상이었다고 밝혔습니다. 공식 발표 수치를 함께 제시해 주세요.</td></tr>
+          <tr><td>교과서 41쪽 지속가능한 스마트 홈</td><td class="fix-old">스마트 홈에 필요한 에너지를 100% 생산 가능</td><td>특정 설계 사례입니다. 우리나라 제도는 에너지 자립률에 따른 제로에너지건축물 등급으로 설명합니다(예: 5등급 = 자립률 20% 이상).</td></tr>
+          <tr><td>3D 프린팅 건설 기술 슬라이드 6·8쪽</td><td class="fix-old">미래 건설의 표준 / 전 산업 분야</td><td>아직 시범·초기 상용화 단계입니다. → ‘주목받는 미래 건설 기술’, ‘여러 산업 분야’.</td></tr>
+          <tr><td>3D 프린팅 건설 기술 슬라이드 7쪽</td><td class="fix-old">초고속으로 시공 가능 / 산업재해 대폭 감소</td><td>벽체 출력은 빠르지만 지붕·창호·설비는 대부분 기존 방식입니다. 산업재해 감소 효과는 근거 자료가 확인되지 않았습니다. → ‘벽체 시공 시간을 줄이고 위험 작업 일부를 자동화할 수 있다’.</td></tr>
+          <tr><td>3D 프린팅 건설 기술 슬라이드 9쪽</td><td class="fix-old">기존 건설 방식보다 3D 프린팅 건설 기술이 압도적으로 유리한 이유는?</td><td>답을 정해 둔 질문입니다. 같은 자료 7쪽의 단점(장비 이동 한계)과 함께 → ‘유리한 점과 불리한 점은 무엇일까?’로 열린 질문을 권합니다.</td></tr>
+          <tr><td>스마트홈 작동 기술 슬라이드 3쪽</td><td class="fix-old">지식 기반 인증 예: 아이디</td><td>아이디는 누구인지 밝히는 식별 정보이고, 인증 요소는 비밀번호·PIN 등입니다.</td></tr>
+          <tr><td>스마트홈 작동 기술 슬라이드 4쪽 / 인증기술 5쪽</td><td class="fix-old">OTP는 탈취해도 즉시 무효 / 기기가 없으면 해킹 불가</td><td>유효 시간 안에는 실시간 피싱으로 가로채 쓰일 수 있고, 유심 복제 등 우회 사례도 있습니다. → ‘해킹을 훨씬 어렵게 만든다’.</td></tr>
+          <tr><td>스마트홈 작동 기술 슬라이드 8쪽</td><td class="fix-old">6대 스마트 센서</td><td>그림에는 7개 항목(동작 감지 센서가 두 번)이 있습니다. 6개(온도·습도·조도·동작·가스·미세먼지) + 소음으로 정리해 주세요.</td></tr>
+          <tr><td>스마트홈 작동 기술 슬라이드 9쪽</td><td class="fix-old">전기 에너지인 전파</td><td>전파는 전자기파의 한 종류입니다. → ‘공기 중으로 퍼지는 전자기파(전파)’.</td></tr>
+          <tr><td>스마트홈 작동 기술 슬라이드 10쪽</td><td class="fix-old">블루투스 속도 수~수십 Mbps, 거리 10~100m / NFC 보안성 높음</td><td>블루투스는 일반적으로 수 Mbps 이하(클래식 최대 3 Mbps, BLE 최대 2 Mbps), 거리는 보통 10m 안팎(기기 등급에 따라 더 멂). NFC는 가까이 대야 해서 엿듣기 어렵지만 중계 공격 등 위험이 없지는 않습니다.</td></tr>
+          <tr><td>인증기술 슬라이드 1·11·12·14쪽</td><td class="fix-old">완벽한 인증 기술 / 절대 뚫리지 않는 성벽 / 완벽한 3중 보안</td><td>다중 인증은 위험을 크게 줄이지만 완벽하지 않습니다. → ‘훨씬 안전한’, ‘뚫기 어려운’.</td></tr>
+          <tr><td>인증기술 슬라이드 7쪽 비교표</td><td class="fix-old">특징 기반 보안성 매우 높음</td><td>사진·모형 등으로 속이려는 시도가 있어 기기 성능에 따라 다릅니다. → ‘높은 편이나 기기 성능에 따라 다름’.</td></tr>
+          <tr><td>한복과 한옥 자료 15쪽 온돌</td><td class="fix-old">우리나라 고유의 난방법 / 구들의 열전도율이 낮아 열효율이 높다</td><td>바닥을 데우는 난방은 다른 지역(중국 동북의 캉 등)에도 있어 ‘우리나라의 대표적인 전통 난방 방식’이 정확합니다. 핵심 원리는 구들장이 열을 머금었다가 천천히 내놓는 ‘축열’입니다. ‘열전도율이 낮아 열효율이 높다’는 인과 설명은 피하는 것을 권합니다.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>8. 내용 고치는 방법</h2>
+      <ul class="plain">
+        <li>기술 카드·변화 요소·사실·주장 문장·출처는 <code>future/content.js</code> 한 파일에 있습니다. 수치를 고칠 때 출처(<code>src</code>)와 확인일(<code>CHECKED</code>)도 함께 고쳐 주세요.</li>
+        <li>기후 수치는 <code>data.js</code>(기상청 자료)를 그대로 읽어 오므로 이 탐구실에서 따로 고칠 필요가 없습니다.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>학생 기록은 학생 기기에만 저장되며 서버로 전송되지 않습니다.</p>
+  </footer>
+
+  <script src="content.js"></script>
+  <script>
+    (function () {
+      var F = window.FUTURE;
+      if (!F) return;
+      function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+      function src(ids) {
+        return (ids || []).map(function (id) {
+          var s = F.sources[id]; if (!s) return "";
+          return s.u ? '<a href="' + esc(s.u) + '" target="_blank" rel="noopener">' + esc(s.t) + "</a>" : esc(s.t);
+        }).filter(Boolean).join("<br>");
+      }
+      document.getElementById("checked").textContent = F.CHECKED;
+      var rows = [];
+      F.drivers.forEach(function (d) { rows.push("<tr><th scope=\"row\">" + d.icon + " " + esc(d.name) + "</th><td><ul class=\"plain small\">" + d.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul></td><td class=\"small\">" + src(d.src) + "</td></tr>"); });
+      F.techs.forEach(function (t) { rows.push("<tr><th scope=\"row\">" + t.icon + " " + esc(t.name) + "</th><td><ul class=\"plain small\">" + t.now.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "<li><i>아직 단정할 수 없음:</i> " + esc(t.open) + "</li></ul></td><td class=\"small\">" + src(t.src) + "</td></tr>"); });
+      document.getElementById("verify-table").innerHTML = '<div class="table-scroll"><table class="dtable"><thead><tr><th scope="col">항목</th><th scope="col">학생 화면의 사실 문장</th><th scope="col">출처</th></tr></thead><tbody>' + rows.join("") + "</tbody></table></div>" +
+        '<p class="note">식품 1kg당 온실가스 그래프 값: Our World in Data(Poore & Nemecek, 2018) 원자료와 같습니다. 무선 통신 비교표는 대표값입니다.</p>';
+      document.getElementById("key-table").innerHTML = '<div class="table-scroll"><table class="dtable"><thead><tr><th scope="col">번호</th><th scope="col">문장</th><th scope="col">판단</th><th scope="col">해설</th></tr></thead><tbody>' +
+        F.claims.map(function (c, i) { return '<tr><td class="c">' + (i + 1) + "</td><td>" + esc(c.s) + '</td><td class="c">' + esc(F.claimLabels[c.a]) + "</td><td>" + esc(c.why) + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    })();
+  </script>
+</body>
+</html>

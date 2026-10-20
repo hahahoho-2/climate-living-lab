@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="미래 생활문화 탐구실">
+  <meta name="description" content="기후·인구·디지털·자원·가치의 변화를 읽고, 스마트팜·대체 식품·스마트 의류·스마트 홈·3D 프린팅 건축 같은 미래 기술을 따져 보며 미래의 의·식·주 생활을 설계하는 학생용 웹앱">
+  <title>미래 의식주 생활문화 탐구실</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23123f2f'/%3E%3Ccircle cx='32' cy='32' r='15' stroke='%23eb6834' stroke-width='5' fill='none'/%3E%3Cpath d='M32 10 V20 M32 44 V54 M10 32 H20 M44 32 H54' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="future.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="eyebrow">고1 기술·가정 · Ⅰ. 생활 문화와 디지털 환경</p>
+      <h1>미래 의식주 생활문화 탐구실</h1>
+      <p class="sub">기후·인구·디지털·자원·가치의 변화를 읽고, 미래 기술을 따져 보며, 나만의 미래 의·식·주 생활을 설계해요.</p>
+      <div class="mast-links">
+        <a class="rpg-link" href="../">🌡️ 기후 자료 탐구실 <span>— 미래 기후를 자료로 깊이 예측하기 →</span></a>
+        <a class="rpg-link" href="../rpg/">🎮 여울섬 기후 생활 RPG <span>→</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="wrap">
+      <nav class="tabs" id="tabs" role="tablist" aria-label="탐구 단계"></nav>
+    </div>
+  </div>
+
+  <main class="wrap" id="main" tabindex="-1">
+    <noscript><p class="panel">이 페이지는 자바스크립트가 켜져 있어야 동작해요.</p></noscript>
+  </main>
+
+  <footer class="wrap foot">
+    <p>사실 자료는 2026-10-20에 출처와 대조해 확인했어요. 미래 기술은 빠르게 바뀌니 보고서에 쓰기 전에 최신 자료를 다시 확인해요.</p>
+    <p>기후 수치: 기상청 기후정보포털 행정구역별 기후변화 전망(2026-10-15 조회) · 설계 대상 인물은 수업용 가상 인물이에요 · 내가 쓴 기록은 이 기기에만 저장돼요.</p>
+    <div class="foot-tools"><a href="../">🌡️ 기후 자료 탐구실</a><a href="../rpg/">🎮 RPG</a><a href="teacher.html">👩‍🏫 교사용 안내</a></div>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="보고서 미리보기" hidden></div>
+
+  <script src="../data.js"></script>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
