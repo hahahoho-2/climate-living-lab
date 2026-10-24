@@ -22,7 +22,7 @@
   const AREAS = ["food", "clothing", "housing"];
   function blank() {
     return {
-      tab: "drivers", area: "food", open: "", region: "", cind: "heat",
+      tab: "drivers", area: "food", open: "", region: "", cind: "heat", exPid: "", exOpen: false,
       drivers: {}, picks: [], notes: {}, evidence: [], claims: {}, comm: {}, rules: [], mfa: [],
       sensor: { id: "", cond: "", acts: [] },
       design: { persona: "", who: "", period: "2", drivers: [], items: { food: {}, clothing: {}, housing: {} }, day: { morning: "", noon: "", evening: "" }, lenses: {} },
@@ -390,18 +390,91 @@
     const sr = D.regions[region].heat;
     return '<p class="climate-hint">🌡️ 참고: ' + esc(region) + " 폭염일수는 현재 " + fmt(sr.low[0], 1) + "일(모델 재현값)에서 " + esc(per.years) + "년에 " + D.scenarios.low.code + " " + fmt(sr.low[p], 1) + "일 ~ " + D.scenarios.high.code + " " + fmt(sr.high[p], 1) + "일로 전망돼요. (기상청, 20년 평균)</p>";
   }
+  /* ---------- 예시 답안 ---------- */
+  const EX_IDS = Object.keys(F.examples || {});
+  const ITEM_ROWS = [["need", "이 사람의 고민"], ["tech", "선택"], ["scene", "장면"], ["why", "근거 (사실 + 출처)"], ["risk", "걱정되는 점과 대안"]];
+  // {region}·{heat} 를 기상청 자료(../data.js)의 지역·폭염일수 전망으로 바꾸기
+  function tok(s, period) {
+    s = String(s || "");
+    if (!climateRegions().length) return s.replace(/\{region\} /g, "").replace(/\{heat\}/g, "앞으로 늘어날 전망");
+    const region = curRegion(), p = +period === 1 ? 1 : 2, sr = D.regions[region].heat;
+    const heat = "현재 " + fmt(sr.low[0], 1) + "일에서 " + D.periods[p].years + "년 " + fmt(sr.low[p], 1) + "~" + fmt(sr.high[p], 1) + "일";
+    return s.replace(/\{region\}/g, region).replace(/\{heat\}/g, heat);
+  }
+  function exFor(pid) { return EX_IDS.indexOf(pid) >= 0 ? F.examples[pid] : null; }
+  function personaOf(pid) { return F.personas.find((p) => p.id === pid) || null; }
+  function techLabel(id) { const t = techById[id]; return t ? t.icon + " " + t.name : id === "practice" ? "기술 없이: 생활 실천·전통의 지혜" : ""; }
+  function exPid() { return EX_IDS.indexOf(S.exPid) >= 0 ? S.exPid : EX_IDS.indexOf(S.design.persona) >= 0 ? S.design.persona : EX_IDS[0]; }
+  // 화면용 예시 답안 (읽기 전용)
+  function exampleView(pid) {
+    const ex = exFor(pid), per = personaOf(pid);
+    if (!ex) return "";
+    let h = '<div class="ex-who"><b>' + (per ? per.icon + " " : "") + "설계 대상</b> " + esc(ex.who) + "</div>" +
+      '<p class="ex-line"><b>고려한 변화 요소</b> ' + ex.drivers.map((d) => '<span class="ex-tag">' + driverById[d].icon + " " + esc(driverById[d].name) + "</span>").join(" ") + "</p>";
+    AREAS.forEach((a) => {
+      const it = ex.items[a], dom = F.domains[a];
+      h += '<div class="ex-area ' + dom.cls + '"><h4>' + dom.icon + " " + esc(dom.name) + "</h4>" + exItemRows(it, ex.period) + "</div>";
+    });
+    h += '<div class="ex-area"><h4>🕒 미래의 하루</h4><dl class="ex-dl"><dt>🌅 아침</dt><dd>' + esc(ex.day.morning) + "</dd><dt>☀️ 낮</dt><dd>" + esc(ex.day.noon) + "</dd><dt>🌙 저녁</dt><dd>" + esc(ex.day.evening) + "</dd></dl></div>" +
+      '<div class="ex-area"><h4>🔍 다섯 가지 렌즈로 점검</h4><dl class="ex-dl">' + F.lenses.map((l) => "<dt>" + l.icon + " " + esc(l.name) + "</dt><dd>" + esc(ex.lenses[l.id]) + "</dd>").join("") + "</dl></div>" +
+      '<div class="ex-good"><b>👍 이 예시가 잘된 점</b><ul class="plain">' + ex.good.map((g) => "<li>" + g + "</li>").join("") + "</ul></div>";
+    return h;
+  }
+  function exItemRows(it, period) {
+    return '<dl class="ex-dl">' + ITEM_ROWS.map((r) => "<dt>" + esc(r[1]) + "</dt><dd>" + (r[0] === "tech" ? "<b>" + esc(techLabel(it.tech)) + "</b>" : esc(tok(it[r[0]], period))) + "</dd>").join("") + "</dl>";
+  }
+  function exPanel() {
+    const pid = exPid();
+    let h = '<section class="panel ex-panel" id="ex-panel"><div class="panel-head"><h2>📖 예시 답안</h2>' +
+      '<button type="button" class="btn small' + (S.exOpen ? "" : " primary") + '" data-act="exopen" aria-expanded="' + !!S.exOpen + '">' + (S.exOpen ? "접기" : "예시 답안 펼쳐 보기") + "</button></div>" +
+      '<p class="panel-desc">가상 인물마다 의·식·주를 모두 채운 모범 답안이에요. <b>그대로 베끼지 말고</b>, 고민 → 선택 → 근거 → 대안이 어떻게 이어지는지 보고 내 말로 써요. 내가 고른 인물의 예시는 아래 빈칸에도 흐린 글씨로 보여요.</p>';
+    if (S.exOpen) {
+      h += '<div class="chips small-chips" role="group" aria-label="예시 인물">' + EX_IDS.map((id) => { const p = personaOf(id); return '<button type="button" class="chip" data-act="expid" data-arg="' + id + '" aria-pressed="' + (id === pid) + '">' + (p ? p.icon + " " + esc(p.name) : id) + "</button>"; }).join("") + "</div>" +
+        '<div class="ex-body">' + exampleView(pid) + "</div>" +
+        '<div class="next-row left"><button type="button" class="btn small" data-act="exprint" data-arg="' + pid + '">🖨️ 이 예시 답안 인쇄·PDF</button></div>';
+    }
+    return h + "</section>";
+  }
+  // 인쇄용 예시 답안 문서
+  function exampleDoc(pid) {
+    const ex = exFor(pid), per = personaOf(pid);
+    if (!ex) return "";
+    const srcIds = (ex.src || []).filter((id) => F.sources[id]);
+    let h = "<h1>예시 답안: 미래 생활 설계<br><small>" + (per ? per.icon + " " + esc(per.name) : "") + " (수업용 가상 인물)</small></h1>" +
+      '<table><tr><th style="width:18%">설계 대상</th><td>' + esc(ex.who) + "</td></tr><tr><th>고려한 변화 요소</th><td>" + ex.drivers.map((d) => driverById[d].icon + " " + esc(driverById[d].name)).join(", ") + "</td></tr></table>";
+    AREAS.forEach((a) => {
+      const it = ex.items[a];
+      h += "<h2>" + F.domains[a].icon + " " + esc(F.domains[a].name) + "</h2><table>" + ITEM_ROWS.map((r) => '<tr><th style="width:22%">' + esc(r[1]) + "</th><td>" + (r[0] === "tech" ? esc(techLabel(it.tech)) : esc(tok(it[r[0]], ex.period))) + "</td></tr>").join("") + "</table>";
+    });
+    h += "<h2>미래의 하루</h2><table><tr><th style=\"width:12%\">아침</th><td>" + esc(ex.day.morning) + "</td></tr><tr><th>낮</th><td>" + esc(ex.day.noon) + "</td></tr><tr><th>저녁</th><td>" + esc(ex.day.evening) + "</td></tr></table>" +
+      "<h2>다섯 가지 렌즈로 점검</h2><table>" + F.lenses.map((l) => '<tr><th style="width:22%">' + l.icon + " " + esc(l.name) + "</th><td>" + esc(ex.lenses[l.id]) + "</td></tr>").join("") + "</table>" +
+      "<h2>이 예시가 잘된 점</h2><ul>" + ex.good.map((g) => "<li>" + g + "</li>").join("") + "</ul>" +
+      "<h2>참고 자료</h2><ol>" + srcIds.map((id) => "<li>" + esc(F.sources[id].t) + (F.sources[id].u ? " — " + esc(F.sources[id].u) : "") + "</li>").join("") + "</ol>" +
+      '<p class="doc-foot">학생 참고용 예시 답안이에요. 그대로 베끼지 말고 내 설계 대상과 내 말로 다시 써요. 사실 자료 확인일: ' + esc(F.CHECKED) + ".</p>";
+    return h;
+  }
+
   function viewDesign() {
     const ds = S.design;
     let h = '<div class="section-title"><h2>④ 미래 생활 설계</h2><p>변화 요소와 기술을 엮어 한 사람의 미래 의·식·주 생활을 설계해요.</p></div>' +
-      '<div class="guide"><b>길잡이</b><span>기술을 많이 넣는 것이 좋은 설계가 아니에요. <b>누구에게, 왜 필요한지</b> 근거를 대고, <b>걱정되는 점과 대안</b>까지 적어야 좋은 설계예요. 기술 없이 생활 실천이나 전통의 지혜로 해결해도 좋아요.</span></div>';
+      '<div class="guide"><b>길잡이</b><span>기술을 많이 넣는 것이 좋은 설계가 아니에요. 의·식·주마다 아래 다섯 칸이 <b>한 줄로 이어지게</b> 써요. 기술 없이 생활 실천이나 전통의 지혜로 해결해도 좋아요.</span>' +
+      '<ol class="chain" aria-label="설계의 연결 고리"><li><b>① 고민</b><small>이 사람이 겪는 어려움</small></li><li><b>② 선택</b><small>그 고민을 풀 기술·실천</small></li><li><b>③ 장면</b><small>생활 속에서 어떻게 쓰나</small></li><li><b>④ 근거</b><small>이 사람에게 맞는 이유 + 출처</small></li><li><b>⑤ 걱정과 대안</b><small>생길 문제 → 해결책</small></li></ol></div>' +
+      exPanel();
 
     // A. 누구의 생활?
     h += '<section class="panel"><div class="rep-head"><span class="rep-n">A</span><div><h3>누구의 미래 생활인가요?</h3><p class="panel-desc">수업을 위해 만든 가상 인물이에요. 직접 정해도 좋아요.</p></div></div>' +
       '<div class="chips">' + F.personas.map((p) => '<button type="button" class="chip" data-act="persona" data-arg="' + p.id + '" aria-pressed="' + (ds.persona === p.id) + '">' + p.icon + " " + esc(p.name) + "</button>").join("") +
       '<button type="button" class="chip" data-act="persona" data-arg="custom" aria-pressed="' + (ds.persona === "custom") + '">✏️ 직접 정하기</button></div>';
-    const per = F.personas.find((p) => p.id === ds.persona);
-    if (per) h += '<p class="note">이 사람에게 중요한 것: ' + esc(per.need) + "</p>";
-    if (ds.persona === "p4" || ds.persona === "custom") h += field("어떤 사람인가요?", "design.who", { input: true, ph: "예) 2045년, 바닷가 도시에서 일하는 30대 중반의 나", max: 80 });
+    const per = personaOf(ds.persona);
+    if (per) {
+      h += '<div class="persona-card"><p><b>' + per.icon + " " + esc(per.name) + "</b> — " + esc(per.profile || per.need) + "</p>";
+      if (per.needs) h += '<p class="ctrl-label">이 사람의 고민 (의·식·주 설계의 출발점)</p><ul class="need-list">' + AREAS.map((a) => '<li class="' + F.domains[a].cls + '"><b>' + F.domains[a].icon + " " + esc(F.domains[a].short) + "</b><span>" + esc(per.needs[a]) + "</span></li>").join("") + "</ul>";
+      h += "</div>";
+    }
+    if (ds.persona === "p4" || ds.persona === "custom") {
+      const ex4 = exFor("p4");
+      h += field("어떤 사람인가요?", "design.who", { input: true, hint: "언제·어디서·무슨 일을 하며·누구와 사는지", ph: "예) " + (ex4 ? ex4.who : "2045년, 바닷가 도시에서 일하는 30대 중반의 나"), max: 100 });
+    }
     h += '<p class="ctrl-label" style="margin-top:14px">언제의 생활인가요?</p><div class="seg small-seg">' +
       [["1", "2030년대", "2021–2040"], ["2", "2040~50년대", "2041–2060"]].map((o) => '<button type="button" data-act="period" data-arg="' + o[0] + '" aria-pressed="' + (String(ds.period) === o[0]) + '"><span>' + o[1] + "</span><small>기후 자료 " + o[2] + "</small></button>").join("") + "</div>" + climateHint() + "</section>";
 
@@ -413,7 +486,8 @@
       }).join("") + "</div></section>";
 
     // C. 의·식·주
-    h += '<section class="panel"><div class="rep-head"><span class="rep-n">C</span><div><h3>의·식·주 설계</h3><p class="panel-desc">분야마다 기술(또는 생활 실천)을 하나 고르고, 장면·근거·걱정과 대안을 적어요.</p></div></div>';
+    h += '<section class="panel"><div class="rep-head"><span class="rep-n">C</span><div><h3>의·식·주 설계</h3><p class="panel-desc">분야마다 ① 고민 → ② 선택 → ③ 장면 → ④ 근거 → ⑤ 걱정과 대안을 차례로 채워요.' + (exFor(ds.persona) ? " 흐린 글씨는 이 인물의 예시 답안이에요. 지우고 내 말로 써요." : "") + "</p></div></div>";
+    const ex = exFor(ds.persona);
     const eviChips = S.evidence.length
       ? (k) => '<div class="evi-insert"><span class="small muted">📌 담은 근거 넣기:</span> ' + S.evidence.map((e, i) => '<button type="button" class="chip mini-chip" data-act="insevi" data-arg="' + k + "|" + i + '" title="' + esc(e.text) + '">' + esc(e.from) + " " + (i + 1) + "</button>").join("") + "</div>"
       : () => '<p class="small muted">① · ② 에서 📌로 담은 근거가 있으면 여기서 바로 넣을 수 있어요.</p>';
@@ -421,24 +495,31 @@
       const dom = F.domains[a];
       const it = ds.items[a] || {};
       const opts = F.techs.filter((t) => t.area === a);
+      const ei = ex ? ex.items[a] : null;
+      const ph = (k, fb) => (ei ? "예) " + tok(ei[k], ex.period) : fb);
+      const pathA = "design.items." + a + ".";
       h += '<div class="area-box ' + dom.cls + '"><h4>' + dom.icon + " " + esc(dom.name) + "</h4>" +
-        '<label class="field-label" for="sel-' + a + '">무엇을 쓸까요?</label><select class="text-input" id="sel-' + a + '" data-bind="design.items.' + a + '.tech"><option value="">— 고르기 —</option>' +
+        (per && per.needs ? '<p class="need-callout"><b>이 사람의 고민</b> ' + esc(per.needs[a]) + "</p>" : "") +
+        field("① 해결할 고민", pathA + "need", { short: true, hint: "이 사람이 " + dom.name + "에서 겪는 어려움", ph: ph("need", "예) 더위로 입맛이 없고 요리하기 힘들어 끼니를 거르기 쉽다.") }) +
+        '<label class="field-label" for="sel-' + a + '">② 무엇으로 해결할까요? <small>' + (ei ? "예시: " + esc(techLabel(ei.tech)) : "그 고민에 맞는 기술이나 생활 실천") + '</small></label><select class="text-input" id="sel-' + a + '" data-bind="' + pathA + 'tech"><option value="">— 고르기 —</option>' +
         opts.map((t) => '<option value="' + t.id + '"' + (it.tech === t.id ? " selected" : "") + ">" + (S.picks.indexOf(t.id) >= 0 ? "⭐ " : "") + esc(t.name) + "</option>").join("") +
         '<option value="practice"' + (it.tech === "practice" ? " selected" : "") + ">기술 없이: 생활 실천·전통의 지혜</option></select>" +
-        field("어떻게 쓰나요? (장면)", "design.items." + a + ".scene", { short: true, ph: "예) 아침에 ○○이 ○○을 감지해 ○○해 준다." }) +
-        field("왜 이 선택인가요? (근거)", "design.items." + a + ".why", { short: true, hint: "사실 + 출처", ph: "변화 요소·기술 카드에서 확인한 사실을 근거로 써요." }) + eviChips(a) +
-        field("걱정되는 점과 대안", "design.items." + a + ".risk", { short: true, ph: "예) 해킹 위험 → 다중 인증과 세대 간 망 분리" }) + "</div>";
+        field("③ 어떻게 쓰나요? (장면)", pathA + "scene", { short: true, hint: "언제, 무엇이, 어떻게", ph: ph("scene", "예) 아침에 ○○이 ○○을 감지해 ○○해 준다.") }) +
+        field("④ 왜 이 사람에게 맞나요? (근거)", pathA + "why", { hint: "사실 + (출처)", ph: ph("why", "예) 고민과 이어지는 사실을 쓰고 괄호 안에 출처를 적어요.") }) + eviChips(a) +
+        field("⑤ 걱정되는 점과 대안", pathA + "risk", { short: true, hint: "문제 → 해결책", ph: ph("risk", "예) 해킹 위험 → 다중 인증과 세대 간 망 분리") }) +
+        (ei ? '<details class="ex-mini"><summary>💡 이 분야 예시 답안 보기</summary>' + exItemRows(ei, ex.period) + "</details>" : "") + "</div>";
     });
+    h += '<div class="link-check"><b>✔ 연결 점검</b><ul class="plain small"><li>① 고민과 ② 선택이 서로 맞나요? (그 기술이 정말 그 고민을 풀어 주나요?)</li><li>④ 근거가 <b>이 사람</b>의 상황(나이·가족·사는 곳·날씨)과 이어지나요?</li><li>④ 근거에 사실과 (출처)가 함께 있나요?</li><li>⑤ 걱정되는 점마다 대안이 짝지어 있나요?</li></ul></div>';
     if (S.rules.length) h += '<p class="ctrl-label">② 실험실에서 만든 센서 규칙 (보고서에 들어가요)</p><ul class="plain small">' + S.rules.map((r) => "<li>" + esc(r) + "</li>").join("") + "</ul>";
     h += "</section>";
 
     // D. 미래의 하루
     h += '<section class="panel"><div class="rep-head"><span class="rep-n">D</span><div><h3>미래의 하루</h3><p class="panel-desc">설계한 의·식·주가 하루 안에서 어떻게 이어지는지 이야기로 써 봐요.</p></div></div><div class="three">' +
-      field("🌅 아침", "design.day.morning", { short: true }) + field("☀️ 낮", "design.day.noon", { short: true }) + field("🌙 저녁", "design.day.evening", { short: true }) + "</div></section>";
+      field("🌅 아침", "design.day.morning", { ph: ex ? "예) " + ex.day.morning : "" }) + field("☀️ 낮", "design.day.noon", { ph: ex ? "예) " + ex.day.noon : "" }) + field("🌙 저녁", "design.day.evening", { ph: ex ? "예) " + ex.day.evening : "" }) + "</div></section>";
 
     // E. 다섯 렌즈
     h += '<section class="panel"><div class="rep-head"><span class="rep-n">E</span><div><h3>다섯 가지 렌즈로 점검하기</h3><p class="panel-desc">내 설계를 다른 사람의 눈으로 다시 봐요. 3개 이상 적어 보세요.</p></div></div>' +
-      F.lenses.map((l) => field(l.icon + " " + esc(l.name), "design.lenses." + l.id, { short: true, hint: l.q })).join("") + "</section>";
+      F.lenses.map((l) => field(l.icon + " " + esc(l.name), "design.lenses." + l.id, { short: true, hint: l.q, ph: ex ? "예) " + ex.lenses[l.id] : "" })).join("") + "</section>";
     h += '<div class="next-row"><button type="button" class="btn" data-act="tab" data-arg="claims">← ③ 사실·주장</button><button type="button" class="btn primary" data-act="tab" data-arg="report">⑤ 보고서로 →</button></div>';
     return h;
   }
@@ -452,7 +533,7 @@
       { ok: S.evidence.length >= 2, t: "📌 근거 2개 이상 담기", tab: "tech" },
       { ok: F.claims.filter((c) => S.claims[c.id]).length >= 10, t: "③ 문장 10개 이상 판단하기", tab: "claims" },
       { ok: !!ds.persona && ds.drivers.length >= 2, t: "④-A·B 설계 대상과 변화 요소 2개 이상", tab: "design" },
-      { ok: AREAS.every((a) => ds.items[a] && ds.items[a].tech && String(ds.items[a].why || "").trim()), t: "④-C 의·식·주 모두 선택과 근거 쓰기", tab: "design" },
+      { ok: AREAS.every((a) => ds.items[a] && ds.items[a].tech && String(ds.items[a].need || "").trim() && String(ds.items[a].why || "").trim()), t: "④-C 의·식·주 모두 고민·선택·근거 쓰기", tab: "design" },
       { ok: F.lenses.filter((l) => String(ds.lenses[l.id] || "").trim()).length >= 3, t: "④-E 렌즈 3개 이상 점검", tab: "design" },
       { ok: !!String(S.report.reflect || "").trim(), t: "⑤ 탐구를 마치며 쓰기", tab: "report" },
     ];
@@ -505,14 +586,15 @@
     const hint = ds.drivers.indexOf("climate") >= 0 ? climateHint().replace(/<[^>]+>/g, "") : "";
     h += "<h2>4. 나의 미래 생활 설계</h2><p><b>고려한 변화 요소:</b> " + (ds.drivers.length ? ds.drivers.map((d) => driverById[d] ? driverById[d].icon + " " + esc(driverById[d].name) : "").join(", ") : blank) + "</p>" +
       (hint ? "<p>" + esc(hint.replace(/^🌡️ 참고: /, "기후 자료: ")) + "</p>" : "") +
-      '<table><tr><th style="width:9%">분야</th><th style="width:17%">선택</th><th>장면</th><th>근거</th><th>걱정되는 점과 대안</th></tr>' +
+      (per && per.profile && per.needs ? "<p><b>인물 설명:</b> " + esc(per.profile) + "</p>" : "") +
       AREAS.map((a) => {
         const it = ds.items[a] || {};
         const tc = techById[it.tech];
         if (tc) addSrc(tc.src);
         const name = tc ? tc.icon + " " + esc(tc.name) : it.tech === "practice" ? "생활 실천·전통의 지혜" : blank;
-        return "<tr><td>" + F.domains[a].icon + " " + esc(F.domains[a].short) + "</td><td>" + name + "</td><td>" + t(it.scene) + "</td><td>" + t(it.why) + "</td><td>" + t(it.risk) + "</td></tr>";
-      }).join("") + "</table>";
+        return "<h3>" + F.domains[a].icon + " " + esc(F.domains[a].name) + "</h3><table>" +
+          '<tr><th style="width:22%">① 해결할 고민</th><td>' + t(it.need) + "</td></tr><tr><th>② 선택</th><td>" + name + "</td></tr><tr><th>③ 장면</th><td>" + t(it.scene) + "</td></tr><tr><th>④ 근거</th><td>" + t(it.why) + "</td></tr><tr><th>⑤ 걱정되는 점과 대안</th><td>" + t(it.risk) + "</td></tr></table>";
+      }).join("");
     if (S.rules.length) h += "<h3>스마트 홈 센서 규칙</h3><ul>" + S.rules.map((r) => "<li>" + esc(r) + "</li>").join("") + "</ul>";
     h += "<h3>미래의 하루</h3><table><tr><th style=\"width:12%\">아침</th><td>" + t(ds.day.morning) + "</td></tr><tr><th>낮</th><td>" + t(ds.day.noon) + "</td></tr><tr><th>저녁</th><td>" + t(ds.day.evening) + "</td></tr></table>";
 
@@ -609,7 +691,12 @@
         S.rules.push(r); toast("규칙을 저장했어요"); break;
       }
       case "delrule": S.rules.splice(+arg, 1); break;
-      case "persona": S.design.persona = S.design.persona === arg ? "" : arg; break;
+      case "persona": S.design.persona = S.design.persona === arg ? "" : arg; if (EX_IDS.indexOf(S.design.persona) >= 0) S.exPid = S.design.persona; break;
+      case "exopen": S.exOpen = !S.exOpen; break;
+      case "expid": S.exPid = arg; break;
+      case "exprint":
+        openOverlay('<div class="paper"><div class="doc">' + exampleDoc(arg) + "</div></div>", '<button type="button" class="btn small primary" data-act="print">🖨️ 인쇄·PDF로 저장</button>');
+        return;
       case "period": S.design.period = arg; break;
       case "ddriver": { const l = S.design.drivers, i = l.indexOf(arg); if (i >= 0) l.splice(i, 1); else l.push(arg); break; }
       case "insevi": {

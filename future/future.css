@@ -93,6 +93,43 @@
 .mini-chip { min-height: 36px !important; padding: 4px 10px !important; font-size: 13px !important; }
 .evi-picked li span { flex: 1; }
 
+/* 설계의 연결 고리 */
+.chain { list-style: none; margin: 8px 0 2px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; counter-reset: none; }
+.chain li { position: relative; display: flex; flex-direction: column; padding: 8px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+.chain li b { color: var(--brand); font-size: 15px; }
+.chain li small { color: var(--ink-2); font-size: 13px; line-height: 1.35; }
+
+/* 예시 답안 */
+.ex-panel { border: 2px dashed var(--brand); background: var(--surface); }
+.ex-panel .panel-head .btn { flex: none; }
+.ex-body { margin-top: 12px; display: grid; gap: 12px; }
+.ex-who { padding: 10px 14px; border-radius: 12px; background: var(--brand-soft); font-size: 15px; }
+.ex-who b { color: var(--brand); margin-right: 6px; }
+.ex-line { font-size: 15px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ex-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--surface-2); font-size: 13px; font-weight: 700; }
+.ex-area { padding: 12px 14px; border-radius: 14px; background: var(--g-wash, var(--surface-2)); border-left: 5px solid var(--g, var(--axis)); }
+.ex-area h4 { font-size: 17px; font-weight: 800; color: var(--g, var(--ink)); margin-bottom: 6px; }
+.ex-dl { margin: 0; display: grid; grid-template-columns: 1fr; gap: 2px 14px; font-size: 15px; }
+@media (min-width: 700px) { .ex-dl { grid-template-columns: 150px 1fr; } }
+.ex-dl dt { font-weight: 800; color: var(--ink-2); padding-top: 6px; }
+.ex-dl dd { margin: 0; padding-top: 6px; }
+@media (min-width: 700px) { .ex-dl dt, .ex-dl dd { border-top: 1px solid var(--border); } .ex-dl dt:first-of-type, .ex-dl dd:first-of-type { border-top: 0; } }
+.ex-good { padding: 12px 14px; border-radius: 14px; background: var(--ok-bg); font-size: 15px; }
+.ex-mini { margin-top: 12px; padding: 0 12px 10px; border-radius: 12px; background: var(--surface); border: 1px dashed var(--g, var(--border-strong)); }
+.ex-mini summary { min-height: 44px; display: flex; align-items: center; font-weight: 800; color: var(--g, var(--ink-2)); cursor: pointer; }
+
+/* 설계 대상과 고민 */
+.persona-card { margin-top: 12px; padding: 12px 14px; border-radius: 14px; background: var(--surface-2); font-size: 15px; }
+.need-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.need-list li { display: flex; gap: 10px; padding: 8px 12px; border-radius: 10px; background: var(--g-wash); border-left: 4px solid var(--g); }
+.need-list li b { flex: none; color: var(--g); }
+.need-callout { margin-top: 8px; padding: 8px 12px; border-radius: 10px; background: var(--surface); font-size: 15px; }
+.need-callout b { color: var(--g); margin-right: 6px; }
+.area-box .idea { min-height: 96px; field-sizing: content; }
+.idea::placeholder, .text-input::placeholder { color: var(--muted); opacity: 1; }
+.link-check { margin-top: 14px; padding: 12px 14px; border-radius: 14px; background: var(--brand-soft); border-left: 5px solid var(--brand); font-size: 15px; }
+.link-check b { color: var(--brand); }
+
 /* 보고서 */
 .checklist { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
 .checklist li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px; background: var(--surface-2); font-size: 15px; }
