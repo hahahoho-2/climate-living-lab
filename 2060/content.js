@@ -102,7 +102,7 @@ window.LAB = {
     fao2013: { t: "FAO (2013), Edible insects", u: "https://www.fao.org/4/i3253e/i3253e.pdf" },
     cricket: { t: "WFIU Earth Eats, 귀뚜라미 사료 효율을 다시 살핀 2015년 연구 소개", u: "https://www.ipm.org/eartheats/study-questions-superfood-hopes-crickets/" },
     sei: { t: "비건뉴스 (2026-06-22), 스톡홀름환경연구소 곤충 단백질 보고서 보도", u: "https://www.vegannews.co.kr/news/article.html?no=383460" },
-    fsa: { t: "영국 식품기준청, 식용 곤충 제품 위험 평가", u: "https://www.food.gov.uk/research/novel-and-non-traditional-foods-additives-and-processes/rapid-risk-assessment-what-is-the-risk-to-consumers-from-consumption-of-the-seven-edible-insects-products-currently-available-in" },
+    fsa: { t: "영국 식품기준청, 식용 곤충 제품 위험 평가", u: "https://science.food.gov.uk/article/156498.pdf" },
     gnu1: { t: "경상국립대 연구, 직물 전극 심전도 측정", u: "https://scholarworks.gnu.ac.kr/item/a2f4e9e2-8ee6-4a55-ac69-84aab7d3977e" },
     gnu2: { t: "경상국립대 연구, 3전극 티셔츠 심전도 측정", u: "https://scholarworks.gnu.ac.kr/item/cceec99d-5ca9-4597-9f05-12e8cac2ce9b" },
     hexo: { t: "Hexoskin 사용자 안내서 (2019), 스마트 셔츠 구조", u: "https://sensorlab.arizona.edu/sites/default/files/2022-06/Hexoskin_Userguide_09-05-2019.pdf" },
