@@ -23,7 +23,7 @@ window.FUTURE = {
     vfEnergy:  { t: "Semenchuk (2025). Energy modelling and analysis of vertical farming for vegetable production, University of Manitoba — 조명이 전체 에너지 사용의 46~75%", u: "https://mspace.lib.umanitoba.ca/items/ac54c125-4283-4507-a3b3-c06e20a397d0" },
     rdaInsect: { t: "농촌진흥청 웹진 (2022-11), 식용곤충 10종", u: "https://rda.go.kr/webzine/2022/11/sub2-1.html" },
     fao2013:   { t: "FAO (2013). Edible insects: Future prospects for food and feed security", u: "https://www.fao.org/4/i3253e/i3253e.pdf" },
-    fsaInsect: { t: "영국 식품기준청(FSA), 식용 곤충 제품의 위험 신속 평가 (알레르기)", u: "https://www.food.gov.uk/research/novel-and-non-traditional-foods-additives-and-processes/rapid-risk-assessment-what-is-the-risk-to-consumers-from-consumption-of-the-seven-edible-insects-products-currently-available-in" },
+    fsaInsect: { t: "영국 식품기준청(FSA), 식용 곤충 제품의 위험 신속 평가 (알레르기)", u: "https://science.food.gov.uk/article/156498.pdf" },
     mfdsCell:  { t: "식약처, 세포배양 등 신기술 적용 식품 인정 절차 마련 (2024-02-22) · 뉴시스 보도", u: "https://www.newsis.com/view/NISX20240222_0002635788" },
     cell2026:  { t: "2026 국정감사: 세포배양식품원료 인정 신청 2건, 인정 0건 (2026년 7월까지) · 푸드투데이 보도", u: "https://www.foodtoday.or.kr/news/article.html?no=208732" },
     aleph:     { t: "이스라엘, 배양 소고기 첫 승인 (2024-01) — 앞선 싱가포르·미국 승인(닭고기) 언급 · Food Safety News", u: "https://www.foodsafetynews.com/2024/01/israel-approves-sale-of-aleph-farms-cultivated-beef/" },
