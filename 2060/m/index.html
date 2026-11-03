@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <meta name="description" content="2060 생활 자료실을 휴대폰에서 참여하기 좋게 줄인 화면">
+  <meta name="theme-color" content="#f3f2ee">
+  <title>2060 생활 자료실 · 휴대폰</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23123f2f'/%3E%3Cpath d='M12 44 L26 30 L36 38 L52 18' stroke='%23eb6834' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../lab.css">
+  <link rel="stylesheet" href="m.css">
+</head>
+<body class="m">
+  <div class="m-sticky">
+    <header class="m-bar wrap">
+      <div>
+        <h1>2060 생활 자료실</h1>
+        <p class="m-sub">고1 기술·가정 · 휴대폰으로 참여하기</p>
+      </div>
+      <a class="m-pc" href="../">PC 화면</a>
+    </header>
+    <div class="controls">
+      <nav class="tabs wrap" id="tabs" role="tablist" aria-label="탐구 영역"></nav>
+    </div>
+  </div>
+
+  <ol class="m-cycle wrap" aria-label="활동 순서">
+    <li><b>1</b>자료 보기</li><li><b>2</b>내 예측</li><li><b>3</b>자료와 비교</li><li><b>4</b>생각 고치기</li>
+  </ol>
+
+  <main class="wrap" id="main" tabindex="-1">
+    <noscript><p class="panel">이 페이지는 자바스크립트가 켜져 있어야 동작해요.</p></noscript>
+  </main>
+
+  <footer class="wrap foot">
+    <p>자료는 2026년 11월 1일 기준으로 확인했어요. 보고서에 쓰기 전에 출처를 열어 최신 값을 다시 확인해요.</p>
+    <p>내가 쓴 기록은 이 기기의 브라우저에만 저장되고 어디로도 보내지 않아요. 같은 기기에서는 PC 화면과 기록이 이어져요. 이름과 학번은 적지 않아요.</p>
+    <p class="m-more"><a href="https://hahahoho-2.github.io/climate-living-lab/" target="_blank" rel="noopener">기후 자료 탐구실</a><a href="https://hahahoho-2.github.io/climate-living-lab/future/" target="_blank" rel="noopener">미래 의식주 생활문화 탐구실</a></p>
+  </footer>
+
+  <button class="m-top" id="toTop" type="button" aria-label="맨 위로" hidden>↑</button>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="../../data.js"></script>
+  <script src="../content.js"></script>
+  <script src="../app.js"></script>
+  <script src="m.js"></script>
+</body>
+</html>
